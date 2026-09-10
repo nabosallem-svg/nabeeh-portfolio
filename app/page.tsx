@@ -1,26 +1,44 @@
-import { ArrowDownRight, ArrowUpRight, Code2, Contact, Mail, MapPin, Sparkles } from 'lucide-react';
+import { ArrowRight, ArrowUpRight, Braces, Bug, Code2, Database, Code2 as Github, Mail, MapPin, Radar, ShieldCheck } from 'lucide-react';
 
-const skills = [
-  { title: 'Languages', items: ['Python', 'C++', 'Java', 'Dart', 'SQL', 'Bash'] },
-  { title: 'Frameworks & tools', items: ['Flutter', 'Git', 'GitHub', 'VS Code', 'CMake', 'Docker', 'Firebase'] },
-  { title: 'Data & systems', items: ['Firestore', 'SQLite', 'MySQL', 'Kali Linux', 'Fedora', 'Windows'] },
-  { title: 'Specialties', items: ['Manual Testing', 'Test Planning', 'Bug Reporting', 'Nmap', 'Wireshark', 'Burp Suite', 'YOLO', 'OpenCV'] },
+const skillGroups = [
+  { icon: Braces, label: 'Languages', value: 'Python · C++ · Java · Dart · SQL · Bash' },
+  { icon: Code2, label: 'Development', value: 'Flutter · Git · GitHub · VS Code · CMake · Docker' },
+  { icon: Database, label: 'Data & systems', value: 'Firebase · Firestore · SQLite · MySQL · Linux · Windows' },
+  { icon: ShieldCheck, label: 'QA & security', value: 'Manual Testing · Test Planning · Nmap · Wireshark · Burp Suite' },
 ];
+
 const projects = [
-  { number: '01', title: 'Pharmacy Management System', description: 'An integrated system for medicine management, point of sale, and expiration date tracking.', tags: ['Java', 'C++', 'Python', 'Flutter', 'Firebase'] },
-  { number: '02', title: 'Store & Inventory Management', description: 'A sales and warehouse system with inventory reports and intelligent low-stock alerts.', tags: ['Java', 'C++', 'Python', 'Flutter', 'Firebase'] },
-  { number: '03', title: 'Full-Stack AI Web Chatbot', description: 'A dynamic conversational application powered by Gemini API with secure cloud storage.', tags: ['Gemini API', 'Firebase', 'Full-Stack'] },
-  { number: '04', title: 'Subsurface Object Detection', description: 'A computer vision model that detects underground objects from GPR imagery.', tags: ['YOLO', 'Python', 'OpenCV', 'GPR'] },
+  { id: '01', type: 'Business Software', title: 'Pharmacy Management System', copy: 'Medicine inventory, POS workflows, and expiration tracking in one complete system.', tech: ['Java', 'C++', 'Python', 'Flutter', 'Firebase'], className: 'project-violet' },
+  { id: '02', type: 'Operations', title: 'Store & Inventory Management', copy: 'Sales, inventory reporting, and proactive low-stock alerts for better daily operations.', tech: ['Java', 'C++', 'Python', 'Flutter', 'Firebase'], className: 'project-coral' },
+  { id: '03', type: 'Artificial Intelligence', title: 'Full-Stack AI Web Chatbot', copy: 'A dynamic Gemini-powered chat experience with Firebase cloud storage.', tech: ['Gemini API', 'Firebase', 'Full-Stack'], className: 'project-blue' },
+  { id: '04', type: 'Computer Vision', title: 'Subsurface Object Detection', copy: 'Detecting underground objects from GPR imagery with a custom vision pipeline.', tech: ['YOLO', 'Python', 'OpenCV', 'GPR'], className: 'project-lime' },
 ];
-function SectionTitle({ eyebrow, title, id }: { eyebrow: string; title: string; id: string }) { return <div className="section-heading" id={id}><span>{eyebrow}</span><h2>{title}</h2></div>; }
+
+function Eyebrow({ children }: { children: React.ReactNode }) { return <p className="eyebrow"><span>+</span>{children}</p>; }
 
 export default function Home() {
   return <main>
-    <nav className="nav shell" aria-label="Primary navigation"><a className="monogram" href="#top" aria-label="Home">N<span>•</span></a><div className="nav-links"><a href="#about">About</a><a href="#skills">Skills</a><a href="#projects">Projects</a></div><a className="nav-cta" href="mailto:nabosallem@gmail.com">Let’s talk <ArrowUpRight size={16}/></a></nav>
-    <section className="hero shell" id="top"><div className="hero-orb" aria-hidden="true"><div className="orb-core">NM</div><span className="orbit orbit-one"/><span className="orbit orbit-two"/></div><div className="hero-copy"><p className="availability"><span/> Available for opportunities</p><p className="intro">Hello, I’m</p><h1>NABEEH<br/><em>MOHAMED</em></h1><p className="role">AI Student <b>•</b> Software Developer <b>•</b><br/> QA & Cybersecurity</p><div className="hero-actions"><a className="primary-button" href="https://github.com/nabosallem-svg" target="_blank" rel="noreferrer"><Code2 size={19}/> View GitHub <ArrowUpRight size={17}/></a><a className="text-link" href="#projects">Explore my work <ArrowDownRight size={17}/></a></div></div><div className="hero-index" aria-hidden="true">01 <span>/ 04</span></div></section>
-    <section className="about shell section-pad" id="about"><SectionTitle eyebrow="01 / About" title="Building reliable ideas into real products." id="about-title"/><div className="about-grid"><p className="about-lead">I’m an AI & Science student at <span>Horus University</span>, graduating in 2029 — driven by the space where intelligent systems, thoughtful software, and security meet.</p><div className="about-detail"><p>I build software systems from the ground up: shaping user interfaces, engineering applications, and designing the databases beneath them.</p><p>My QA background brings a critical eye to every project through manual testing, test planning, and precise bug reporting. I’m also exploring cybersecurity to build things that don’t just work — but hold up.</p></div></div><div className="about-meta"><span><MapPin size={16}/> Egypt</span><span><Sparkles size={16}/> AI & Science · Class of 2029</span></div></section>
-    <section className="skills-section section-pad" id="skills"><div className="shell"><SectionTitle eyebrow="02 / Toolkit" title="Skills & technologies" id="skills-title"/><div className="skill-grid">{skills.map(group=><article className="skill-card" key={group.title}><h3>{group.title}</h3><div>{group.items.map(item=><span key={item}>{item}</span>)}</div></article>)}</div></div></section>
-    <section className="projects shell section-pad" id="projects"><SectionTitle eyebrow="03 / Selected work" title="Projects made to solve." id="projects-title"/><div className="project-list">{projects.map(project=><article className="project-card" key={project.number}><div className="project-image"><span>{project.number}</span><div className="image-mark">PROJECT<br/>PREVIEW</div></div><div className="project-content"><p className="project-number">PROJECT / {project.number}</p><h3>{project.title}</h3><p>{project.description}</p><div className="tags">{project.tags.map(tag=><span key={tag}>{tag}</span>)}</div></div><span className="project-arrow"><ArrowUpRight/></span></article>)}</div></section>
-    <footer className="footer" id="contact"><div className="shell"><p className="footer-kicker">04 / Contact</p><h2>Have a project in mind?<br/><em>Let’s build it.</em></h2><a className="email" href="mailto:nabosallem@gmail.com">nabosallem@gmail.com <ArrowUpRight/></a><div className="footer-bottom"><p>© 2026 Nabeeh Mohamed</p><div><a href="https://github.com/nabosallem-svg" target="_blank" rel="noreferrer"><Code2 size={18}/> GitHub</a><a href="https://linkedin.com/in/nabeeh-mohamed-91b2aa386" target="_blank" rel="noreferrer"><Contact size={18}/> LinkedIn</a><a href="mailto:nabosallem@gmail.com"><Mail size={18}/> Email</a></div></div></div></footer>
+    <header className="topbar"><a className="brand" href="#home">NABEEH<span>®</span></a><nav aria-label="Main navigation"><a href="#about">About</a><a href="#work">Work</a><a href="#skills">Skills</a></nav><a className="contact-pill" href="mailto:nabosallem@gmail.com">Let’s talk <ArrowUpRight size={17}/></a></header>
+
+    <section className="hero" id="home">
+      <div className="hero-status"><span className="status-dot"/> OPEN TO OPPORTUNITIES <b>CAIRO, EG</b></div>
+      <div className="hero-title"><h1>AI STUDENT<br/><span>& SOFTWARE</span><br/>DEVELOPER.</h1><div className="hero-stamp" aria-hidden="true"><span>NM</span><small>BUILD · TEST · SECURE</small></div></div>
+      <div className="hero-foot"><p>I design and build reliable digital products — from the interface to the database, with quality and security in mind.</p><a href="#work">View selected work <ArrowRight size={19}/></a></div>
+      <div className="ticker" aria-hidden="true"><div>PYTHON&nbsp;&nbsp;✦&nbsp;&nbsp; FLUTTER&nbsp;&nbsp;✦&nbsp;&nbsp; QA TESTING&nbsp;&nbsp;✦&nbsp;&nbsp; CYBERSECURITY&nbsp;&nbsp;✦&nbsp;&nbsp; ARTIFICIAL INTELLIGENCE&nbsp;&nbsp;✦&nbsp;&nbsp;</div></div>
+    </section>
+
+    <section className="about layout" id="about">
+      <aside><Eyebrow>About me</Eyebrow><p>01 — 04</p></aside>
+      <div className="about-main"><h2>I turn complex problems into <em>clear, dependable</em> software.</h2><div className="about-copy"><p>An AI & Science student at Horus University, Class of 2029. I build applications, design thoughtful interfaces, and structure the databases that make products work.</p><p>My practice extends into quality assurance and cybersecurity — testing software manually, planning test coverage, reporting bugs clearly, and exploring how systems can be made safer.</p></div><div className="stats"><div><strong>2029</strong><span>Graduation year</span></div><div><strong>04</strong><span>Featured projects</span></div><div><strong>03</strong><span>Core disciplines</span></div></div></div>
+    </section>
+
+    <section className="work layout" id="work">
+      <aside><Eyebrow>Selected work</Eyebrow><p>02 — 04</p></aside>
+      <div className="work-main"><div className="section-intro"><h2>Projects with<br/>a purpose.</h2><p>A selection of systems built across business software, AI, and computer vision.</p></div><div className="project-grid">{projects.map((project)=><article className={`project ${project.className}`} key={project.id}><div className="project-art"><span>{project.id}</span><div className="mock-window"><i/><i/><i/><b>{project.type}</b><small>PROJECT / {project.id}</small></div></div><div className="project-info"><p>{project.type}</p><h3>{project.title}</h3><p className="project-copy">{project.copy}</p><div>{project.tech.map(t=><span key={t}>{t}</span>)}</div></div></article>)}</div></div>
+    </section>
+
+    <section className="skills layout" id="skills"><aside><Eyebrow>Capabilities</Eyebrow><p>03 — 04</p></aside><div className="skills-main"><h2>Tools I use to<br/><em>make things work.</em></h2><div className="skill-list">{skillGroups.map(({icon:Icon,label,value},index)=><article key={label}><span className="skill-index">0{index+1}</span><Icon/><div><h3>{label}</h3><p>{value}</p></div><ArrowUpRight className="skill-arrow"/></article>)}</div><div className="specialties"><div><Bug/><span>Manual testing<br/>& bug reporting</span></div><div><Radar/><span>YOLO, OpenCV<br/>& GPR detection</span></div><div><ShieldCheck/><span>Security tools<br/>& network analysis</span></div></div></div></section>
+
+    <footer id="contact"><div className="footer-top"><Eyebrow>Start a conversation</Eyebrow><h2>LET’S MAKE<br/><span>SOMETHING</span><br/>USEFUL.</h2><a href="mailto:nabosallem@gmail.com" aria-label="Send email"><ArrowUpRight/></a></div><div className="footer-links"><div><MapPin size={17}/> Egypt · Available remotely</div><a href="mailto:nabosallem@gmail.com"><Mail size={17}/> nabosallem@gmail.com</a><a href="https://github.com/nabosallem-svg" target="_blank" rel="noreferrer"><Github size={17}/> GitHub</a><a href="https://linkedin.com/in/nabeeh-mohamed-91b2aa386" target="_blank" rel="noreferrer">LinkedIn <ArrowUpRight size={16}/></a></div><div className="copyright">© 2026 NABEEH MOHAMED ABO SALEM <span>DESIGNED TO EVOLVE</span></div></footer>
   </main>;
 }
