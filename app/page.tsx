@@ -239,19 +239,12 @@ export default function Home() {
             <p style={{ margin: 0, color: 'var(--muted)', fontSize: 12.5, lineHeight: 1.5 }}>
               <strong style={{ color: 'var(--text)' }}>Cybersecurity · Red Teaming & Bug Hunting</strong> — Primary Focus
               <br />
-              <span style={{ color: 'var(--faint)' }}>AI & Science Student — Supporting stack</span> · Samannoud, Al Gharbiyah
+              <span style={{ color: 'var(--faint)' }}>AI & Science Student — Supporting stack</span> · Horus University
             </p>
           </div>
         </div>
 
-        <div style={{ padding: 12, background: 'var(--surface)', border: '1px solid var(--line)', borderRadius: 12, marginBottom: 14, borderLeft: '3px solid var(--text)' }}>
-          <h4 style={{ margin: 0, fontSize: 11, fontWeight: 800, letterSpacing: '.06em', textTransform: 'uppercase', color: 'var(--text)' }}>★ Data Gris Store — Core System Build</h4>
-          <p style={{ margin: '5px 0 0', color: 'var(--muted)', fontSize: 12.5, lineHeight: 1.6 }}>
-            Flutter store & inventory — POS, stock, suppliers, sales, barcode, treasury. Built with a friend, this system sharpens my secure-systems thinking.
-          </p>
-        </div>
-
-        <p style={{ margin: '0 0 16px', color: 'var(--muted)', fontSize: 13, lineHeight: 1.7 }}>
+        <p style={{ margin: '0 0 18px', color: 'var(--muted)', fontSize: 13, lineHeight: 1.7 }}>
           I study <strong style={{ color: 'var(--text)' }}>AI & Science at Horus University, Class of 2029</strong>, and train in{' '}
           <strong style={{ color: 'var(--text)' }}>Red Teaming with Hussam Shadeed & CyberGuardX</strong> alongside DEPI Software Testing (ISTQB, STLC, Manual Testing). I build complete, secure systems — UI, database, and tests — and harden them with a hacker mindset.{' '}
           <strong style={{ color: 'var(--text)' }}>Why work with me?</strong> Reliable, clean code, thorough testing, and security-first thinking. Passionate about breaking to learn, then defending with automation.{' '}
