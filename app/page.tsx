@@ -253,10 +253,10 @@ export default function Home() {
           </div>
         </div>
 
-        <p style={{ margin: '0 0 16px', color: 'var(--muted)', fontSize: 13, lineHeight: 1.65 }}>
-          <strong style={{ color: 'var(--text)' }}>Horus University — AI & Science, Class of 2029</strong> · Red Teaming with Hussam Shadeed & CyberGuardX · DEPI Testing (ISTQB, STLC). I build secure systems — UI, DB, tests — with clean code and a hacker mindset.
+        <p style={{ margin: '0 0 18px', color: 'var(--muted)', fontSize: 13, lineHeight: 1.7 }}>
+          Cybersecurity (Red Teaming & Bug Hunting) is my core focus. I am an AI & Science student at Horus University (Class of 2029), currently training in software testing with DEPI and Red Teaming with Hussam Shady & CyberGuardX. I build and secure full systems with a hacker mindset.
           <br />
-          <span style={{ color: 'var(--faint)', fontSize: 12 }}>Python · Java · C++ · Dart · Linux · Nmap · Burp Suite · Wireshark</span>
+          <span style={{ color: 'var(--faint)', fontSize: 12 }}>Core Stack: Python · Java · C++ · Dart · Linux · Nmap · Burp Suite · Wireshark · YOLO</span>
         </p>
 
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16 }}>
