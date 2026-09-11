@@ -223,29 +223,25 @@ export default function Home() {
           <p>AI student, Red Team trainee & builder — I break to learn, then build to protect.</p>
           <div className="line" />
         </div>
-        <div style={{ display: 'grid', gridTemplateColumns: '112px 1fr', gap: 18, alignItems: 'start', marginBottom: 18 }}>
-          <img src="/assets/avatar.png" alt="Nabeeh Mohamed Abo Salem" style={{ width: 96, height: 96, borderRadius: '50%', objectFit: 'cover', border: '1px solid var(--line)' }} />
+        <div style={{ display: 'grid', gridTemplateColumns: '88px 1fr', gap: 14, alignItems: 'start', marginBottom: 16 }}>
+          <img src="/assets/avatar.png" alt="Nabeeh Mohamed Abo Salem" style={{ width: 80, height: 80, borderRadius: '50%', objectFit: 'cover', border: '1px solid var(--line)' }} />
           <div>
-            <h3 style={{ margin: '2px 0 4px', fontSize: 18, fontWeight: 800 }}>Nabeeh Mohamed Abo Salem</h3>
-            <p style={{ margin: 0, color: 'var(--muted)', fontSize: 13, lineHeight: 1.6 }}>
-              <strong style={{ color: 'var(--text)' }}>AI & Science Student | Software Developer | QA & Cybersecurity — Red Teaming & Bug Hunting</strong>
-              <br />
-              Horus University — Faculty of AI & Science · Class of 2029 · Gharbia, Egypt
-              <br />
-              Red Team course with <strong style={{ color: 'var(--text)' }}>Hussam Shadeed</strong> + CyberGuardX (university-sponsored) · DEPI Software Testing (Jul 2026–Present)
+            <h3 style={{ margin: '0 0 3px', fontSize: 16, fontWeight: 800 }}>Nabeeh Mohamed Abo Salem</h3>
+            <p style={{ margin: 0, color: 'var(--muted)', fontSize: 12.5, lineHeight: 1.5 }}>
+              <strong style={{ color: 'var(--text)' }}>AI Student · Red Teamer & Bug Hunter</strong> — Horus University · Gharbia, Egypt
             </p>
           </div>
         </div>
 
-        <div style={{ padding: 14, background: 'var(--surface)', border: '1px solid var(--line)', borderRadius: 12, marginBottom: 16, borderLeft: '3px solid var(--text)' }}>
-          <h4 style={{ margin: 0, fontSize: 12, fontWeight: 800, letterSpacing: '.06em', textTransform: 'uppercase', color: 'var(--text)' }}>★ Featured Project — Data Gris Store (Most Important)</h4>
-          <p style={{ margin: '6px 0 0', color: 'var(--muted)', fontSize: 13, lineHeight: 1.6 }}>
-            Comprehensive Flutter store & inventory system <strong style={{ color: 'var(--text)' }}>built with a friend</strong> — POS, inventory, suppliers, purchases, sales, barcode, expiry tracking, treasury and commissions. This is my core system; the Pharmacy Management System shares its engine. Tech: Flutter, Dart, Hive, Firebase, SQLite — Private repo: <a href="https://github.com/nabosallem-svg/DataGris-Store" target="_blank" rel="noreferrer" style={{ color: 'var(--text)', textDecoration: 'underline' }}>DataGris-Store</a>
+        <div style={{ padding: 12, background: 'var(--surface)', border: '1px solid var(--line)', borderRadius: 12, marginBottom: 14, borderLeft: '3px solid var(--text)' }}>
+          <h4 style={{ margin: 0, fontSize: 11, fontWeight: 800, letterSpacing: '.06em', textTransform: 'uppercase', color: 'var(--text)' }}>★ Data Gris Store — Core System</h4>
+          <p style={{ margin: '5px 0 0', color: 'var(--muted)', fontSize: 12.5, lineHeight: 1.6 }}>
+            Flutter store & inventory — POS, stock, suppliers, sales, barcode, treasury. Built with a friend, my main system build.
           </p>
         </div>
 
-        <p style={{ margin: '0 0 16px', color: 'var(--muted)', fontSize: 13.5, lineHeight: 1.7 }}>
-          Skilled in <strong style={{ color: 'var(--text)' }}>Python, Java, C++, Dart, Linux</strong>. I enjoy breaking things to understand how they work — learning how attackers think so I can help defend systems better. Building hands-on experience through university projects and security training, always exploring AI security.
+        <p style={{ margin: '0 0 14px', color: 'var(--muted)', fontSize: 13, lineHeight: 1.65 }}>
+          Focused on <strong style={{ color: 'var(--text)' }}>Red Teaming & Bug Hunting</strong> — break to learn, build to defend. Training with <strong style={{ color: 'var(--text)' }}>Hussam Shadeed</strong> + CyberGuardX. Build secure systems, test them, and harden them. Tools: Python, Linux, Nmap, Burp Suite, Wireshark.
         </p>
 
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16 }}>
