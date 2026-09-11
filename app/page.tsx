@@ -220,34 +220,48 @@ export default function Home() {
           <h2>
             About <span>— basics</span>
           </h2>
-          <p>Who I am, what I study, and where I work — clear and complete.</p>
+          <p>AI student, Red Team trainee & builder — I break to learn, then build to protect.</p>
           <div className="line" />
         </div>
-        <div style={{ display: 'grid', gridTemplateColumns: '112px 1fr', gap: 18, alignItems: 'start', marginBottom: 22 }}>
+        <div style={{ display: 'grid', gridTemplateColumns: '112px 1fr', gap: 18, alignItems: 'start', marginBottom: 18 }}>
           <img src="/assets/avatar.png" alt="Nabeeh Mohamed Abo Salem" style={{ width: 96, height: 96, borderRadius: '50%', objectFit: 'cover', border: '1px solid var(--line)' }} />
           <div>
             <h3 style={{ margin: '2px 0 4px', fontSize: 18, fontWeight: 800 }}>Nabeeh Mohamed Abo Salem</h3>
             <p style={{ margin: 0, color: 'var(--muted)', fontSize: 13, lineHeight: 1.6 }}>
-              <strong style={{ color: 'var(--text)' }}>AI & Science Student | Software Developer | QA & Cybersecurity</strong>
+              <strong style={{ color: 'var(--text)' }}>AI & Science Student | Software Developer | QA & Cybersecurity — Red Teaming & Bug Hunting</strong>
               <br />
-              Horus University — Class of 2029 · DEPI Software Testing (Jul 2026–Present) · Gharbia, Egypt
+              Horus University — Faculty of AI & Science · Class of 2029 · Gharbia, Egypt
+              <br />
+              Red Team course with <strong style={{ color: 'var(--text)' }}>Hussam Shadeed</strong> + CyberGuardX (university-sponsored) · DEPI Software Testing (Jul 2026–Present)
             </p>
           </div>
         </div>
+
+        <div style={{ padding: 14, background: 'var(--surface)', border: '1px solid var(--line)', borderRadius: 12, marginBottom: 16, borderLeft: '3px solid var(--text)' }}>
+          <h4 style={{ margin: 0, fontSize: 12, fontWeight: 800, letterSpacing: '.06em', textTransform: 'uppercase', color: 'var(--text)' }}>★ Featured Project — Data Gris Store (Most Important)</h4>
+          <p style={{ margin: '6px 0 0', color: 'var(--muted)', fontSize: 13, lineHeight: 1.6 }}>
+            Comprehensive Flutter store & inventory system <strong style={{ color: 'var(--text)' }}>built with a friend</strong> — POS, inventory, suppliers, purchases, sales, barcode, expiry tracking, treasury and commissions. This is my core system; the Pharmacy Management System shares its engine. Tech: Flutter, Dart, Hive, Firebase, SQLite — Private repo: <a href="https://github.com/nabosallem-svg/DataGris-Store" target="_blank" rel="noreferrer" style={{ color: 'var(--text)', textDecoration: 'underline' }}>DataGris-Store</a>
+          </p>
+        </div>
+
+        <p style={{ margin: '0 0 16px', color: 'var(--muted)', fontSize: 13.5, lineHeight: 1.7 }}>
+          Skilled in <strong style={{ color: 'var(--text)' }}>Python, Java, C++, Dart, Linux</strong>. I enjoy breaking things to understand how they work — learning how attackers think so I can help defend systems better. Building hands-on experience through university projects and security training, always exploring AI security.
+        </p>
+
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16 }}>
           <div style={{ padding: 16, background: 'var(--surface)', border: '1px solid var(--line)', borderRadius: 12 }}>
             <h4 style={{ margin: '0 0 8px', fontSize: 12, fontWeight: 800, letterSpacing: '.08em', textTransform: 'uppercase', color: 'var(--faint)', display: 'flex', alignItems: 'center', gap: 6 }}>
               <GraduationCap size={14} /> Education
             </h4>
             <p style={{ margin: 0, fontSize: 13.5, fontWeight: 700 }}>Horus University — B.Sc. AI & Science</p>
-            <p style={{ margin: '4px 0 0', color: 'var(--muted)', fontSize: 13 }}>Expected 2029</p>
+            <p style={{ margin: '4px 0 0', color: 'var(--muted)', fontSize: 13 }}>Class of 2029 · Markaz Zefta, Al Gharbiyah</p>
           </div>
           <div style={{ padding: 16, background: 'var(--surface)', border: '1px solid var(--line)', borderRadius: 12 }}>
             <h4 style={{ margin: '0 0 8px', fontSize: 12, fontWeight: 800, letterSpacing: '.08em', textTransform: 'uppercase', color: 'var(--faint)', display: 'flex', alignItems: 'center', gap: 6 }}>
               <Briefcase size={14} /> Training
             </h4>
-            <p style={{ margin: 0, fontSize: 13.5, fontWeight: 700 }}>DEPI — Software Testing</p>
-            <p style={{ margin: '4px 0 0', color: 'var(--muted)', fontSize: 13 }}>Jul 2026 – Present · ISTQB, STLC</p>
+            <p style={{ margin: 0, fontSize: 13.5, fontWeight: 700 }}>DEPI — Software Testing · Red Team</p>
+            <p style={{ margin: '4px 0 0', color: 'var(--muted)', fontSize: 13 }}>DEPI Jul 2026–Present (ISTQB, STLC) · Red Team with Hussam Shadeed · CyberGuardX</p>
           </div>
         </div>
       </section>
