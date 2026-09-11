@@ -15,6 +15,8 @@ import {
   Briefcase,
   X,
   Play,
+  Moon,
+  Sun,
 } from 'lucide-react';
 const Github = Code2;
 
@@ -108,10 +110,30 @@ const projects = [
 ];
 
 export default function Home() {
+  const [theme, setTheme] = useState<'light' | 'dark'>('light');
+  const [mounted, setMounted] = useState(false);
   const [form, setForm] = useState({ name: '', email: '', message: '' });
   const [sent, setSent] = useState(false);
   const [toast, setToast] = useState<string | null>(null);
   const [selected, setSelected] = useState<Project | null>(null);
+
+  useEffect(() => {
+    const saved = localStorage.getItem('theme') as 'light' | 'dark' | null;
+    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    const init = saved ?? (prefersDark ? 'dark' : 'light');
+    setTheme(init);
+    document.documentElement.classList.toggle('dark', init === 'dark');
+    setMounted(true);
+  }, []);
+  useEffect(() => {
+    if (!mounted) return;
+    document.documentElement.classList.toggle('dark', theme === 'dark');
+  }, [theme, mounted]);
+  function toggleTheme() {
+    const next = theme === 'dark' ? 'light' : 'dark';
+    setTheme(next);
+    localStorage.setItem('theme', next);
+  }
 
   // /* ★ CLOSE ON ESCAPE + LOCK SCROLL ★ */
   useEffect(() => {
@@ -145,9 +167,14 @@ export default function Home() {
           <a href="#projects">Projects</a>
           <a href="#contact">Contact</a>
         </nav>
-        <a className="cta-min" href="#contact">
-          Let&apos;s talk <ArrowUpRight size={13} style={{ display: 'inline', marginLeft: 6, verticalAlign: -1 }} />
-        </a>
+        <div className="topbar-actions">
+          <button className="theme-toggle" onClick={toggleTheme} aria-label={theme === 'dark' ? 'Light mode' : 'Dark mode'} title={theme === 'dark' ? 'Light mode' : 'Dark mode'}>
+            {mounted ? (theme === 'dark' ? <Sun size={15} /> : <Moon size={15} />) : <Moon size={15} style={{ opacity: 0 }} />}
+          </button>
+          <a className="cta-min" href="#contact">
+            Let&apos;s talk <ArrowUpRight size={13} style={{ display: 'inline', marginLeft: 6, verticalAlign: -1 }} />
+          </a>
+        </div>
       </header>
 
       <section className="hero" id="home">
