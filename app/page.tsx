@@ -151,8 +151,19 @@ export default function Home() {
   function onSubmit(e: React.FormEvent) {
     e.preventDefault();
     if (!form.name || !form.email || !form.message) return;
+    const subject = `Portfolio Contact from ${form.name}`;
+    const body = `Name: ${form.name}\nEmail: ${form.email}\n\nMessage:\n${form.message}`;
+    const mailto = `mailto:nabosallem@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    // يفتح برنامج الإيميل مباشرة
+    window.location.href = mailto;
+    // يبعت مباشرة لـ Gmail عبر FormSubmit (أول مرة هيجيلك إيميل تأكيد دوس Confirm وبعدها يوصلك علطول)
+    fetch('https://formsubmit.co/ajax/nabosallem@gmail.com', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+      body: JSON.stringify({ name: form.name, email: form.email, message: form.message, _subject: subject, _captcha: 'false' }),
+    }).catch(() => {});
     setSent(true);
-    setTimeout(() => setSent(false), 2800);
+    setTimeout(() => setSent(false), 3000);
     setForm({ name: '', email: '', message: '' });
   }
 
