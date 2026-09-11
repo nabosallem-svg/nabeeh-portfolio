@@ -11,8 +11,6 @@ import {
   MapPin,
   Send,
   CheckCircle2,
-  Moon,
-  Sun,
   GraduationCap,
   Briefcase,
   X,
@@ -110,31 +108,10 @@ const projects = [
 ];
 
 export default function Home() {
-  const [theme, setTheme] = useState<'light' | 'dark'>('light');
-  const [mounted, setMounted] = useState(false);
   const [form, setForm] = useState({ name: '', email: '', message: '' });
   const [sent, setSent] = useState(false);
   const [toast, setToast] = useState<string | null>(null);
-  // /* ★ WORKING MODAL LOGIC — useState controls which card's modal is open ★ */
   const [selected, setSelected] = useState<Project | null>(null);
-
-  useEffect(() => {
-    localStorage.removeItem('theme');
-    setTheme('light');
-    document.documentElement.classList.remove('dark');
-    document.documentElement.style.colorScheme = 'light';
-    setMounted(true);
-  }, []);
-  useEffect(() => {
-    document.documentElement.classList.remove('dark');
-    document.documentElement.style.colorScheme = 'light';
-  }, [theme, mounted]);
-
-  function toggleTheme() {
-    localStorage.removeItem('theme');
-    setTheme('light');
-    document.documentElement.classList.remove('dark');
-  }
 
   // /* ★ CLOSE ON ESCAPE + LOCK SCROLL ★ */
   useEffect(() => {
@@ -149,12 +126,6 @@ export default function Home() {
     } else document.body.style.overflow = '';
   }, [selected]);
 
-  function toggleTheme() {
-    localStorage.removeItem('theme');
-    setTheme('light');
-    document.documentElement.classList.remove('dark');
-    document.documentElement.style.colorScheme = 'light';
-  }
   function onSubmit(e: React.FormEvent) {
     e.preventDefault();
     if (!form.name || !form.email || !form.message) return;
@@ -174,14 +145,9 @@ export default function Home() {
           <a href="#projects">Projects</a>
           <a href="#contact">Contact</a>
         </nav>
-        <div className="topbar-actions">
-          <button className="theme-toggle" onClick={toggleTheme} aria-label={theme === 'dark' ? 'Light mode' : 'Dark mode'} title={theme === 'dark' ? 'Light mode' : 'Dark mode'}>
-            {mounted ? (theme === 'dark' ? <Sun size={15} /> : <Moon size={15} />) : <Moon size={15} style={{ opacity: 0 }} />}
-          </button>
-          <a className="cta-min" href="#contact">
-            Let&apos;s talk <ArrowUpRight size={13} style={{ display: 'inline', marginLeft: 6, verticalAlign: -1 }} />
-          </a>
-        </div>
+        <a className="cta-min" href="#contact">
+          Let&apos;s talk <ArrowUpRight size={13} style={{ display: 'inline', marginLeft: 6, verticalAlign: -1 }} />
+        </a>
       </header>
 
       <section className="hero" id="home">
