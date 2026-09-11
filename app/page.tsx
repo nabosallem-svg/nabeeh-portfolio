@@ -119,10 +119,9 @@ export default function Home() {
   const [selected, setSelected] = useState<Project | null>(null);
 
   useEffect(() => {
-    const saved = localStorage.getItem('theme') as 'light' | 'dark' | null;
-    const init = saved ?? 'light';
-    setTheme(init);
-    document.documentElement.classList.toggle('dark', init === 'dark');
+    localStorage.setItem('theme', 'light');
+    setTheme('light');
+    document.documentElement.classList.remove('dark');
     setMounted(true);
   }, []);
   useEffect(() => {
