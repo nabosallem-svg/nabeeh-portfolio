@@ -1,44 +1,454 @@
-import { ArrowRight, ArrowUpRight, Braces, Bug, Code2, Database, Code2 as Github, Mail, MapPin, Radar, ShieldCheck } from 'lucide-react';
+'use client';
 
-const skillGroups = [
-  { icon: Braces, label: 'Languages', value: 'Python · C++ · Java · Dart · SQL · Bash' },
-  { icon: Code2, label: 'Development', value: 'Flutter · Git · GitHub · VS Code · CMake · Docker' },
-  { icon: Database, label: 'Data & systems', value: 'Firebase · Firestore · SQLite · MySQL · Linux · Windows' },
-  { icon: ShieldCheck, label: 'QA & security', value: 'Manual Testing · Test Planning · Nmap · Wireshark · Burp Suite' },
+import { useEffect, useState } from 'react';
+import {
+  ArrowRight,
+  ArrowUpRight,
+  Download,
+  Code2,
+  ExternalLink,
+  Mail,
+  MapPin,
+  Send,
+  CheckCircle2,
+  Moon,
+  Sun,
+  GraduationCap,
+  Briefcase,
+  X,
+  Play,
+} from 'lucide-react';
+const Github = Code2;
+
+// === SKILLS (static) ===
+const skills = [
+  { label: 'Programming', items: ['C++', 'Python', 'Java', 'Dart', 'Bash'] },
+  { label: 'Development', items: ['Flutter', 'Next.js', 'FastAPI'] },
+  { label: 'AI & Data', items: ['Machine Learning', 'Computer Vision', 'YOLO', 'OpenCV'] },
+  { label: 'Cybersecurity & QA', items: ['Nmap', 'Burp Suite', 'Penetration Testing', 'Manual Testing', 'ISTQB'] },
 ];
 
+// ==========================================
+// /* ★★★ PUT YOUR REAL URLS HERE — EDIT THESE 4 LINES BELOW ★★★ */
+// Each project has TWO functional <a> links: GitHub + Open/Live. Never use <button>.
+// For APK/JAR, keep the `download` attribute — it forces download instead of preview.
+// ==========================================
+type Project = (typeof projects)[number];
 const projects = [
-  { id: '01', type: 'Business Software', title: 'Pharmacy Management System', copy: 'Medicine inventory, POS workflows, and expiration tracking in one complete system.', tech: ['Java', 'C++', 'Python', 'Flutter', 'Firebase'], className: 'project-violet' },
-  { id: '02', type: 'Operations', title: 'Store & Inventory Management', copy: 'Sales, inventory reporting, and proactive low-stock alerts for better daily operations.', tech: ['Java', 'C++', 'Python', 'Flutter', 'Firebase'], className: 'project-coral' },
-  { id: '03', type: 'Artificial Intelligence', title: 'Full-Stack AI Web Chatbot', copy: 'A dynamic Gemini-powered chat experience with Firebase cloud storage.', tech: ['Gemini API', 'Firebase', 'Full-Stack'], className: 'project-blue' },
-  { id: '04', type: 'Computer Vision', title: 'Subsurface Object Detection', copy: 'Detecting underground objects from GPR imagery with a custom vision pipeline.', tech: ['YOLO', 'Python', 'OpenCV', 'GPR'], className: 'project-lime' },
+  {
+    id: '01',
+    type: 'SaaS · Security — Featured',
+    title: 'RedPulse / ReconPilot',
+    desc: 'Automated penetration testing platform — subdomain discovery, live probing and vulnerability scanning with reporting.',
+    tech: ['FastAPI', 'Next.js', 'Supabase', 'Vercel'],
+    year: '2026',
+    image: '/assets/project-reconpilot.png',
+    // /* ★ PUT YOUR REDPULSE GITHUB LINK HERE ★ */  ⬇️ paste your repo URL
+    github: 'https://github.com/nabosallem-svg/RedPulse',
+    // /* ★ PUT YOUR REDPULSE LIVE LINK HERE ★ */  ⬇️ paste your Vercel URL (use redpulse-frontend — the "nine" link is dead)
+    demo: 'https://redpulse-frontend.vercel.app',
+    demoLabel: 'Launch RedPulse',
+    howTitle: 'How it works',
+    how: 'FastAPI runs Subfinder → httpx → Nuclei/Nmap → stores assets & findings in PostgreSQL → Next.js dashboard shows results with real-time status. Auth via Supabase, payments via Stripe.',
+    run: '1) Clone: git clone https://github.com/nabosallem-svg/RedPulse\n2) cd reconpilot && cp .env.example .env\n3) docker-compose up  →  frontend http://localhost:3000  |  api http://localhost:8000',
+    featured: true,
+  },
+  {
+    id: '02',
+    type: 'Business Software',
+    title: 'Data Gris Store',
+    desc: 'Comprehensive store & inventory system — POS, suppliers, purchases, sales, barcode, treasury and commissions. Built with my friend.',
+    tech: ['Flutter', 'Dart', 'Hive', 'Firebase'],
+    year: '2025',
+    image: '/assets/project-store.png',
+    // /* ★ PUT YOUR DATA GRIS GITHUB LINK HERE — PRIVATE NOW ★ */
+    github: 'https://github.com/nabosallem-svg/DataGris-Store',
+    // /* ★ PUT YOUR APK LINK HERE ★ */  — local file in /public or external URL. Keep `download` attribute on the <a> tag!
+    demo: '/DataGris-App.apk',
+    demoLabel: 'Download APK',
+    howTitle: 'How inventory & sales work',
+    how: 'Flutter POS scans barcode → Hive caches locally → Firebase syncs → stock auto-deducts, low-stock alerts trigger, treasury updates and invoices generate. Works offline then syncs.',
+    run: '1) Download APK above and install on Android\n2) Or: flutter pub get && flutter run  (Hive local DB + Firebase)',
+    featured: false,
+  },
+  {
+    id: '03',
+    type: 'Backend · Java',
+    title: 'VELOX — Modular Commerce Engine',
+    desc: 'E-commerce engine and delivery system built with Java and Maven using object-oriented design.',
+    tech: ['Java 17', 'Maven', 'OOP'],
+    year: '2025',
+    image: '/assets/project-velox.png',
+    // /* ★ PUT YOUR VELOX GITHUB LINK HERE ★ */
+    github: 'https://github.com/nabosallem-svg/VELOX',
+    // /* ★ PUT YOUR JAR LINK HERE ★ */  — keep `download` attribute!
+    demo: '/Velox.jar',
+    demoLabel: 'Download JAR',
+    howTitle: 'How to run locally',
+    how: 'Polymorphic stores (Fashion/Tech/Restaurant) with Strategy discounts and pluggable payments. Delivery simulation included.',
+    run: '1) java -jar Velox.jar\n2) Or: mvn clean package && mvn exec:java\n3) Or: mvn package && java -jar target/Velox-1.0.jar',
+    featured: false,
+  },
+  {
+    id: '04',
+    type: 'Desktop · C++',
+    title: 'Numerical Calculator GUI',
+    desc: 'Advanced desktop calculator with a clean Qt interface — precise operations and error handling.',
+    tech: ['C++', 'Qt Creator', 'CMake'],
+    year: '2024',
+    image: '/assets/project-calculator.png',
+    // /* ★ PUT YOUR CALCULATOR GITHUB LINK HERE — PRIVATE NOW ★ */
+    github: 'https://github.com/nabosallem-svg/Numerical-Calculator-GUI',
+    // /* ★ PUT YOUR CALCULATOR DEMO/REQUEST LINK HERE ★ */
+    demo: 'https://github.com/nabosallem-svg/Numerical-Calculator-GUI',
+    demoLabel: 'Open Repo',
+    howTitle: 'How to run locally',
+    how: 'Qt Widgets GUI with expression parser and validation. CMake builds on Windows/Linux.',
+    run: '1) Qt Creator → open CMakeLists.txt → Build & Run\n2) Or: cmake -B build && cmake --build build && ./build/Calculator',
+    featured: false,
+  },
 ];
-
-function Eyebrow({ children }: { children: React.ReactNode }) { return <p className="eyebrow"><span>+</span>{children}</p>; }
 
 export default function Home() {
-  return <main>
-    <header className="topbar"><a className="brand" href="#home">NABEEH<span>®</span></a><nav aria-label="Main navigation"><a href="#about">About</a><a href="#work">Work</a><a href="#skills">Skills</a></nav><a className="contact-pill" href="mailto:nabosallem@gmail.com">Let’s talk <ArrowUpRight size={17}/></a></header>
+  const [theme, setTheme] = useState<'light' | 'dark'>('light');
+  const [mounted, setMounted] = useState(false);
+  const [form, setForm] = useState({ name: '', email: '', message: '' });
+  const [sent, setSent] = useState(false);
+  const [toast, setToast] = useState<string | null>(null);
+  // /* ★ WORKING MODAL LOGIC — useState controls which card's modal is open ★ */
+  const [selected, setSelected] = useState<Project | null>(null);
 
-    <section className="hero" id="home">
-      <div className="hero-status"><span className="status-dot"/> OPEN TO OPPORTUNITIES <b>CAIRO, EG</b></div>
-      <div className="hero-title"><h1>AI STUDENT<br/><span>& SOFTWARE</span><br/>DEVELOPER.</h1><div className="hero-stamp" aria-hidden="true"><span>NM</span><small>BUILD · TEST · SECURE</small></div></div>
-      <div className="hero-foot"><p>I design and build reliable digital products — from the interface to the database, with quality and security in mind.</p><a href="#work">View selected work <ArrowRight size={19}/></a></div>
-      <div className="ticker" aria-hidden="true"><div>PYTHON&nbsp;&nbsp;✦&nbsp;&nbsp; FLUTTER&nbsp;&nbsp;✦&nbsp;&nbsp; QA TESTING&nbsp;&nbsp;✦&nbsp;&nbsp; CYBERSECURITY&nbsp;&nbsp;✦&nbsp;&nbsp; ARTIFICIAL INTELLIGENCE&nbsp;&nbsp;✦&nbsp;&nbsp;</div></div>
-    </section>
+  useEffect(() => {
+    const saved = localStorage.getItem('theme') as 'light' | 'dark' | null;
+    const init = saved ?? 'light';
+    setTheme(init);
+    document.documentElement.classList.toggle('dark', init === 'dark');
+    setMounted(true);
+  }, []);
+  useEffect(() => {
+    if (!mounted) return;
+    document.documentElement.classList.toggle('dark', theme === 'dark');
+  }, [theme, mounted]);
 
-    <section className="about layout" id="about">
-      <aside><Eyebrow>About me</Eyebrow><p>01 — 04</p></aside>
-      <div className="about-main"><h2>I turn complex problems into <em>clear, dependable</em> software.</h2><div className="about-copy"><p>An AI & Science student at Horus University, Class of 2029. I build applications, design thoughtful interfaces, and structure the databases that make products work.</p><p>My practice extends into quality assurance and cybersecurity — testing software manually, planning test coverage, reporting bugs clearly, and exploring how systems can be made safer.</p></div><div className="stats"><div><strong>2029</strong><span>Graduation year</span></div><div><strong>04</strong><span>Featured projects</span></div><div><strong>03</strong><span>Core disciplines</span></div></div></div>
-    </section>
 
-    <section className="work layout" id="work">
-      <aside><Eyebrow>Selected work</Eyebrow><p>02 — 04</p></aside>
-      <div className="work-main"><div className="section-intro"><h2>Projects with<br/>a purpose.</h2><p>A selection of systems built across business software, AI, and computer vision.</p></div><div className="project-grid">{projects.map((project)=><article className={`project ${project.className}`} key={project.id}><div className="project-art"><span>{project.id}</span><div className="mock-window"><i/><i/><i/><b>{project.type}</b><small>PROJECT / {project.id}</small></div></div><div className="project-info"><p>{project.type}</p><h3>{project.title}</h3><p className="project-copy">{project.copy}</p><div>{project.tech.map(t=><span key={t}>{t}</span>)}</div></div></article>)}</div></div>
-    </section>
 
-    <section className="skills layout" id="skills"><aside><Eyebrow>Capabilities</Eyebrow><p>03 — 04</p></aside><div className="skills-main"><h2>Tools I use to<br/><em>make things work.</em></h2><div className="skill-list">{skillGroups.map(({icon:Icon,label,value},index)=><article key={label}><span className="skill-index">0{index+1}</span><Icon/><div><h3>{label}</h3><p>{value}</p></div><ArrowUpRight className="skill-arrow"/></article>)}</div><div className="specialties"><div><Bug/><span>Manual testing<br/>& bug reporting</span></div><div><Radar/><span>YOLO, OpenCV<br/>& GPR detection</span></div><div><ShieldCheck/><span>Security tools<br/>& network analysis</span></div></div></div></section>
+  // /* ★ CLOSE ON ESCAPE + LOCK SCROLL ★ */
+  useEffect(() => {
+    if (selected) {
+      document.body.style.overflow = 'hidden';
+      const onEsc = (e: KeyboardEvent) => e.key === 'Escape' && setSelected(null);
+      window.addEventListener('keydown', onEsc);
+      return () => {
+        document.body.style.overflow = '';
+        window.removeEventListener('keydown', onEsc);
+      };
+    } else document.body.style.overflow = '';
+  }, [selected]);
 
-    <footer id="contact"><div className="footer-top"><Eyebrow>Start a conversation</Eyebrow><h2>LET’S MAKE<br/><span>SOMETHING</span><br/>USEFUL.</h2><a href="mailto:nabosallem@gmail.com" aria-label="Send email"><ArrowUpRight/></a></div><div className="footer-links"><div><MapPin size={17}/> Egypt · Available remotely</div><a href="mailto:nabosallem@gmail.com"><Mail size={17}/> nabosallem@gmail.com</a><a href="https://github.com/nabosallem-svg" target="_blank" rel="noreferrer"><Github size={17}/> GitHub</a><a href="https://linkedin.com/in/nabeeh-mohamed-91b2aa386" target="_blank" rel="noreferrer">LinkedIn <ArrowUpRight size={16}/></a></div><div className="copyright">© 2026 NABEEH MOHAMED ABO SALEM <span>DESIGNED TO EVOLVE</span></div></footer>
-  </main>;
+  function toggleTheme() {
+    const next = theme === 'dark' ? 'light' : 'dark';
+    setTheme(next);
+    localStorage.setItem('theme', next);
+  }
+  function onSubmit(e: React.FormEvent) {
+    e.preventDefault();
+    if (!form.name || !form.email || !form.message) return;
+    setSent(true);
+    setTimeout(() => setSent(false), 2800);
+    setForm({ name: '', email: '', message: '' });
+  }
+
+  return (
+    <main>
+      <header className="topbar">
+        <a className="brand" href="#home">
+          NABEEH <span>— Portfolio 2026</span>
+        </a>
+        <nav className="nav" aria-label="Primary">
+          <a href="#about">About</a>
+          <a href="#projects">Projects</a>
+          <a href="#contact">Contact</a>
+        </nav>
+        <div className="topbar-actions">
+          <button className="theme-toggle" onClick={toggleTheme} aria-label={theme === 'dark' ? 'Light mode' : 'Dark mode'} title={theme === 'dark' ? 'Light mode' : 'Dark mode'}>
+            {mounted ? (theme === 'dark' ? <Sun size={15} /> : <Moon size={15} />) : <Moon size={15} style={{ opacity: 0 }} />}
+          </button>
+          <a className="cta-min" href="#contact">
+            Let&apos;s talk <ArrowUpRight size={13} style={{ display: 'inline', marginLeft: 6, verticalAlign: -1 }} />
+          </a>
+        </div>
+      </header>
+
+      <section className="hero" id="home">
+        <p className="hero-label">Available for internships & freelance</p>
+        <h1>
+          <span className="l1">Nabeeh Mohamed</span>
+          <span className="l2">Abo Salem —</span>
+          <span className="l3">
+            <span>AI Student &</span> Developer.
+          </span>
+        </h1>
+        <p className="hero-desc">AI & Science student at Horus University (Class of 2029) and DEPI trainee — Based in Gharbia, Egypt.</p>
+        <div className="hero-actions">
+          <a className="btn-primary" href="#projects">
+            View projects <ArrowRight size={14} style={{ display: 'inline', marginLeft: 6 }} />
+          </a>
+          <a className="btn-ghost" href="/Nabeeh_Mohamed_CV.pdf" target="_blank" rel="noreferrer">
+            <Download size={14} style={{ display: 'inline', marginRight: 6, verticalAlign: -2 }} /> Download CV
+          </a>
+          <a className="btn-ghost" href="https://github.com/nabosallem-svg" target="_blank" rel="noreferrer">
+            <Code2 size={14} style={{ display: 'inline', marginRight: 6, verticalAlign: -2 }} /> GitHub
+          </a>
+        </div>
+        <div className="skills-mini reveal">
+          <h3>Skills — simple, grouped</h3>
+          {skills.map((g, i) => (
+            <div key={g.label} className="tag-row reveal" style={{ transitionDelay: `${i * 0.06}s` } as any}>
+              <b>{g.label}</b>
+              {g.items.map((t) => (
+                <span key={t} className="tag">
+                  {t}
+                </span>
+              ))}
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <section className="section reveal" id="about">
+        <div className="section-head">
+          <h2>
+            About <span>— basics</span>
+          </h2>
+          <p>Who I am, what I study, and where I work — clear and complete.</p>
+          <div className="line" />
+        </div>
+        <div style={{ display: 'grid', gridTemplateColumns: '112px 1fr', gap: 18, alignItems: 'start', marginBottom: 22 }}>
+          <img src="/assets/avatar.png" alt="Nabeeh Mohamed Abo Salem" style={{ width: 96, height: 96, borderRadius: '50%', objectFit: 'cover', border: '1px solid var(--line)' }} />
+          <div>
+            <h3 style={{ margin: '2px 0 4px', fontSize: 18, fontWeight: 800 }}>Nabeeh Mohamed Abo Salem</h3>
+            <p style={{ margin: 0, color: 'var(--muted)', fontSize: 13, lineHeight: 1.6 }}>
+              <strong style={{ color: 'var(--text)' }}>AI & Science Student | Software Developer | QA & Cybersecurity</strong>
+              <br />
+              Horus University — Class of 2029 · DEPI Software Testing (Jul 2026–Present) · Gharbia, Egypt
+            </p>
+          </div>
+        </div>
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16 }}>
+          <div style={{ padding: 16, background: 'var(--surface)', border: '1px solid var(--line)', borderRadius: 12 }}>
+            <h4 style={{ margin: '0 0 8px', fontSize: 12, fontWeight: 800, letterSpacing: '.08em', textTransform: 'uppercase', color: 'var(--faint)', display: 'flex', alignItems: 'center', gap: 6 }}>
+              <GraduationCap size={14} /> Education
+            </h4>
+            <p style={{ margin: 0, fontSize: 13.5, fontWeight: 700 }}>Horus University — B.Sc. AI & Science</p>
+            <p style={{ margin: '4px 0 0', color: 'var(--muted)', fontSize: 13 }}>Expected 2029</p>
+          </div>
+          <div style={{ padding: 16, background: 'var(--surface)', border: '1px solid var(--line)', borderRadius: 12 }}>
+            <h4 style={{ margin: '0 0 8px', fontSize: 12, fontWeight: 800, letterSpacing: '.08em', textTransform: 'uppercase', color: 'var(--faint)', display: 'flex', alignItems: 'center', gap: 6 }}>
+              <Briefcase size={14} /> Training
+            </h4>
+            <p style={{ margin: 0, fontSize: 13.5, fontWeight: 700 }}>DEPI — Software Testing</p>
+            <p style={{ margin: '4px 0 0', color: 'var(--muted)', fontSize: 13 }}>Jul 2026 – Present · ISTQB, STLC</p>
+          </div>
+        </div>
+      </section>
+
+      {/* PROJECTS — CLICKABLE CARDS → MODAL */}
+      <section className="section" id="projects">
+        <div className="section-head reveal">
+          <h2>
+            Selected <span>work — 4 projects</span>
+          </h2>
+          <p>Click any card to open its modal — backdrop or Esc closes it.</p>
+          <div className="line" />
+        </div>
+        <div className="project-grid">
+          {projects.map((p, i) => (
+            <article
+              key={p.title}
+              className={`project reveal ${p.featured ? 'project-featured' : ''}`}
+              style={{ transitionDelay: `${i * 0.06}s` } as any}
+              // /* ★ CLICK CARD → OPEN ITS SPECIFIC MODAL ★ */
+              onClick={() => setSelected(p)}
+              role="button"
+              tabIndex={0}
+              onKeyDown={(e) => (e.key === 'Enter' || e.key === ' ') && setSelected(p)}
+              aria-label={`Open ${p.title} details`}
+            >
+              <div className="project-top">
+                <span className="project-type">{p.type}</span>
+                <span className="project-year">{p.year}</span>
+              </div>
+              <h3>{p.title}</h3>
+              <p>{p.desc}</p>
+              <div className="project-tech">
+                {p.tech.map((t) => (
+                  <span key={t}>{t}</span>
+                ))}
+              </div>
+              <div className="project-links" style={{ pointerEvents: 'none' }}>
+                <span>
+                  Open <ArrowUpRight size={12} />
+                </span>
+                <span>
+                  GitHub <Github size={12} />
+                </span>
+              </div>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      {/* MODAL — BACKDROP + FADE */}
+      {selected && (
+        // /* ★ BACKDROP CLICK CLOSES MODAL ★ */
+        <div className="modal-backdrop" onClick={() => setSelected(null)} role="dialog" aria-modal="true" aria-label={selected.title}>
+          <div className="modal" onClick={(e) => e.stopPropagation()}>
+            <button className="modal-close" onClick={() => setSelected(null)} aria-label="Close">
+              <X size={16} />
+            </button>
+            <div className="modal-media">
+              <img src={selected.image} alt={selected.title} />
+              {selected.featured && <span className="modal-badge">Featured — Live SaaS</span>}
+            </div>
+            <div className="modal-body">
+              <p className="project-type" style={{ marginBottom: 8 }}>
+                {selected.type} · {selected.year}
+              </p>
+              <h3>{selected.title}</h3>
+              <p className="modal-desc">{selected.desc}</p>
+              <div className="modal-tech">
+                {selected.tech.map((t) => (
+                  <span key={t}>{t}</span>
+                ))}
+              </div>
+              <div className="modal-section">
+                <h4>{selected.howTitle}</h4>
+                <p>{selected.how}</p>
+                <pre>{selected.run}</pre>
+              </div>
+
+              {/* /* ★ TWO FUNCTIONAL <a> TAGS — NO <button href="#"> — EDIT HREFS ABOVE ★ */ }
+              <div className="modal-actions">
+                {/* /* ★ OPEN/LIVE BUTTON — <a> with href + target="_blank" ★ */}
+                <a
+                  className={selected.featured ? 'btn-primary modal-primary' : 'btn-primary'}
+                  href={selected.demo}
+                  target={selected.demo.startsWith('http') || selected.demo.startsWith('mailto:') ? '_blank' : undefined}
+                  rel="noreferrer"
+                  // /* ★ DOWNLOAD ATTRIBUTE — ONLY FOR APK/JAR (starts with "/") ★ */
+                  download={selected.demo.startsWith('/') ? '' : undefined}
+                >
+                  {selected.featured ? (
+                    <>
+                      <Play size={14} style={{ display: 'inline', marginRight: 6, verticalAlign: -2 }} />
+                      Launch RedPulse
+                    </>
+                  ) : (
+                    <>
+                      <ExternalLink size={14} style={{ display: 'inline', marginRight: 6, verticalAlign: -2 }} />
+                      {selected.demoLabel}
+                    </>
+                  )}
+                </a>
+                {/* /* ★ GITHUB BUTTON — <a> with href + target="_blank" ★ */}
+                <a className="btn-ghost" href={selected.github} target="_blank" rel="noreferrer">
+                  <Github size={14} style={{ display: 'inline', marginRight: 6, verticalAlign: -2 }} />
+                  GitHub
+                </a>
+              </div>
+              <p style={{ margin: '10px 0 0', color: 'var(--faint)', fontSize: 11, textAlign: 'center' }}>Click backdrop or press Esc to close</p>
+            </div>
+          </div>
+        </div>
+      )}
+
+      <section className="section" id="contact">
+        <div className="section-head reveal">
+          <h2>
+            Contact <span>— simple</span>
+          </h2>
+          <p>One form, no noise. I reply within 24 hours.</p>
+          <div className="line" />
+        </div>
+        <div className="contact-wrap reveal d1">
+          <form className="contact-form" onSubmit={onSubmit}>
+            <h3>Send a message</h3>
+            <p>Direct to my inbox — nabosallem@gmail.com</p>
+            <div className="field">
+              <label htmlFor="name">Name</label>
+              <input id="name" placeholder="Nabeeh Mohamed" value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} required />
+            </div>
+            <div className="field">
+              <label htmlFor="email">Email</label>
+              <input id="email" type="email" placeholder="you@example.com" value={form.email} onChange={(e) => setForm({ ...form, email: e.target.value })} required />
+            </div>
+            <div className="field">
+              <label htmlFor="message">Message</label>
+              <textarea id="message" placeholder="Hello Nabeeh, I'd like to..." value={form.message} onChange={(e) => setForm({ ...form, message: e.target.value })} required />
+            </div>
+            <button className="btn-submit" type="submit" disabled={sent}>
+              {sent ? (
+                <>
+                  <CheckCircle2 size={14} style={{ display: 'inline', marginRight: 8, verticalAlign: -2 }} />
+                  Sent — thank you
+                </>
+              ) : (
+                <>
+                  <Send size={14} style={{ display: 'inline', marginRight: 8, verticalAlign: -2 }} />
+                  Send message
+                </>
+              )}
+            </button>
+          </form>
+          <div className="contact-side">
+            <h3>Direct</h3>
+            <p>Here are the essentials.</p>
+            <div className="contact-list">
+              <div>
+                <Mail size={14} />
+                <a href="mailto:nabosallem@gmail.com">nabosallem@gmail.com</a>
+              </div>
+              <div>
+                <MapPin size={14} />
+                <span>Gharbia, Egypt — Remote</span>
+              </div>
+              <div>
+                <Code2 size={14} />
+                <a href="https://github.com/nabosallem-svg" target="_blank" rel="noreferrer">
+                  github.com/nabosallem-svg
+                </a>
+              </div>
+              <div>
+                <ExternalLink size={14} />
+                <a href="https://linkedin.com/in/nabeeh-mohamed-91b2aa386" target="_blank" rel="noreferrer">
+                  linkedin.com/in/nabeeh-mohamed
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <footer>
+        <p>© 2026 Nabeeh Mohamed Abo Salem — Minimal, calm, content-first.</p>
+        <nav>
+          <a href="mailto:nabosallem@gmail.com">Email</a>
+          <a href="https://github.com/nabosallem-svg" target="_blank" rel="noreferrer">
+            GitHub
+          </a>
+          <a href="https://linkedin.com/in/nabeeh-mohamed-91b2aa386" target="_blank" rel="noreferrer">
+            LinkedIn
+          </a>
+        </nav>
+      </footer>
+
+      {toast && <div style={{ position: 'fixed', bottom: 20, left: '50%', transform: 'translateX(-50%)', background: 'var(--text)', color: 'var(--bg)', padding: '10px 16px', borderRadius: 999, fontSize: 12, fontWeight: 600, zIndex: 99 }}>{toast}</div>}
+
+      <script
+        dangerouslySetInnerHTML={{
+          __html: `(()=>{const o=new IntersectionObserver(e=>{e.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');o.unobserve(e.target)}})},{threshold:.12});document.querySelectorAll('.reveal').forEach(e=>o.observe(e))})();`,
+        }}
+      />
+    </main>
+  );
 }
