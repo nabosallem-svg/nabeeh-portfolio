@@ -22,8 +22,8 @@ const Github = Code2;
 
 // === SKILLS (static) ===
 const skills = [
-  { label: 'Programming', items: ['C++', 'Python', 'Java', 'Dart', 'Bash'] },
-  { label: 'Development', items: ['Flutter', 'Next.js', 'FastAPI'] },
+  { label: 'Programming', items: ['C++', 'Python', 'Java', 'Bash'] },
+  { label: 'Development', items: ['Next.js', 'FastAPI', 'Qt Creator'] },
   { label: 'AI & Data', items: ['Machine Learning', 'Computer Vision', 'YOLO', 'OpenCV'] },
   { label: 'Cybersecurity & QA', items: ['Nmap', 'Burp Suite', 'Penetration Testing', 'Manual Testing', 'ISTQB'] },
 ];
@@ -58,7 +58,7 @@ const projects = [
     type: 'Business Software',
     title: 'Data Gris Store',
     desc: 'Comprehensive store & inventory system — POS, suppliers, purchases, sales, barcode, treasury and commissions. Built with my friend.',
-    tech: ['Flutter', 'Dart', 'Hive', 'Firebase'],
+    tech: ['Dart', 'Hive', 'Firebase'],
     year: '2025',
     image: '/assets/project-store.png',
     // /* ★ PUT YOUR DATA GRIS GITHUB LINK HERE — PRIVATE NOW ★ */
@@ -253,7 +253,7 @@ export default function Home() {
           I study <strong style={{ color: 'var(--text)' }}>AI & Science at Horus University, Class of 2029</strong>, and train in{' '}
           <strong style={{ color: 'var(--text)' }}>Red Teaming with Hussam Shadeed & CyberGuardX</strong> alongside DEPI Software Testing (ISTQB, STLC, Manual Testing). I build complete, secure systems — UI, database, and tests — and harden them with a hacker mindset.{' '}
           <strong style={{ color: 'var(--text)' }}>Why work with me?</strong> Reliable, clean code, thorough testing, and security-first thinking. Passionate about breaking to learn, then defending with automation.{' '}
-          <span style={{ color: 'var(--faint)' }}>Python · Java · C++ · Dart · Flutter · Linux · Nmap · Burp Suite · Wireshark · YOLO · OpenCV</span>
+          <span style={{ color: 'var(--faint)' }}>Python · Java · C++ · Dart · Linux · Nmap · Burp Suite · Wireshark · YOLO · OpenCV</span>
         </p>
 
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16 }}>
