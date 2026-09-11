@@ -183,7 +183,7 @@ export default function Home() {
           <span className="l1">Nabeeh Mohamed</span>
           <span className="l2">Abo Salem —</span>
           <span className="l3">
-            <span>Cybersecurity</span> & Systems.
+            <span>Red Teaming</span> & Bug Hunting.
           </span>
         </h1>
         <p className="hero-desc">
