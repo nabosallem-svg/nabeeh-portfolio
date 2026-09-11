@@ -27,7 +27,7 @@ export default function RootLayout({
       <head>
         <script
           dangerouslySetInnerHTML={{
-            __html: `(function(){try{localStorage.setItem('theme','light');document.documentElement.classList.remove('dark')}catch(e){}})();`,
+            __html: `(function(){try{localStorage.removeItem('theme');document.documentElement.classList.remove('dark');document.documentElement.style.colorScheme='light'}catch(e){}})();`,
           }}
         />
       </head>

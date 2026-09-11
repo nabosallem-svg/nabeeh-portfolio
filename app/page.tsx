@@ -119,17 +119,22 @@ export default function Home() {
   const [selected, setSelected] = useState<Project | null>(null);
 
   useEffect(() => {
-    localStorage.setItem('theme', 'light');
+    localStorage.removeItem('theme');
     setTheme('light');
     document.documentElement.classList.remove('dark');
+    document.documentElement.style.colorScheme = 'light';
     setMounted(true);
   }, []);
   useEffect(() => {
-    if (!mounted) return;
-    document.documentElement.classList.toggle('dark', theme === 'dark');
+    document.documentElement.classList.remove('dark');
+    document.documentElement.style.colorScheme = 'light';
   }, [theme, mounted]);
 
-
+  function toggleTheme() {
+    localStorage.removeItem('theme');
+    setTheme('light');
+    document.documentElement.classList.remove('dark');
+  }
 
   // /* ★ CLOSE ON ESCAPE + LOCK SCROLL ★ */
   useEffect(() => {
@@ -145,9 +150,10 @@ export default function Home() {
   }, [selected]);
 
   function toggleTheme() {
-    const next = theme === 'dark' ? 'light' : 'dark';
-    setTheme(next);
-    localStorage.setItem('theme', next);
+    localStorage.removeItem('theme');
+    setTheme('light');
+    document.documentElement.classList.remove('dark');
+    document.documentElement.style.colorScheme = 'light';
   }
   function onSubmit(e: React.FormEvent) {
     e.preventDefault();
