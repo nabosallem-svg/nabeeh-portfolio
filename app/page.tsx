@@ -249,11 +249,10 @@ export default function Home() {
           </div>
         </div>
 
-        <p style={{ margin: '0 0 18px', color: 'var(--muted)', fontSize: 13, lineHeight: 1.7 }}>
-          I study <strong style={{ color: 'var(--text)' }}>AI & Science at Horus University, Class of 2029</strong>, and train in{' '}
-          <strong style={{ color: 'var(--text)' }}>Red Teaming with Hussam Shadeed & CyberGuardX</strong> alongside DEPI Software Testing (ISTQB, STLC, Manual Testing). I build complete, secure systems — UI, database, and tests — and harden them with a hacker mindset.{' '}
-          <strong style={{ color: 'var(--text)' }}>Why work with me?</strong> Reliable, clean code, thorough testing, and security-first thinking. Passionate about breaking to learn, then defending with automation.{' '}
-          <span style={{ color: 'var(--faint)' }}>Python · Java · C++ · Dart · Linux · Nmap · Burp Suite · Wireshark · YOLO · OpenCV</span>
+        <p style={{ margin: '0 0 16px', color: 'var(--muted)', fontSize: 13, lineHeight: 1.65 }}>
+          <strong style={{ color: 'var(--text)' }}>Horus University — AI & Science, Class of 2029</strong> · Red Teaming with Hussam Shadeed & CyberGuardX · DEPI Testing (ISTQB, STLC). I build secure systems — UI, DB, tests — with clean code and a hacker mindset.
+          <br />
+          <span style={{ color: 'var(--faint)', fontSize: 12 }}>Python · Java · C++ · Dart · Linux · Nmap · Burp Suite · Wireshark</span>
         </p>
 
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16 }}>
