@@ -228,18 +228,18 @@ export default function Home() {
             About <span>— core focus</span>
           </h2>
           <p>
-            <strong style={{ color: 'var(--text)' }}>Cybersecurity (Red Teaming & Bug Hunting)</strong> is my core — break to learn, then build to defend. AI is my supporting academic stack.
+            <strong style={{ color: 'var(--text)' }}>Cybersecurity (Red Teaming & Bug Hunting)</strong> is my core — break to learn, then build to defend. AI is my supporting stack.
           </p>
           <div className="line" />
         </div>
-        <div style={{ display: 'grid', gridTemplateColumns: '88px 1fr', gap: 14, alignItems: 'start', marginBottom: 18 }}>
+        <div style={{ display: 'grid', gridTemplateColumns: '88px 1fr', gap: 14, alignItems: 'start', marginBottom: 16 }}>
           <img src="/assets/avatar.png" alt="Nabeeh Mohamed Abo Salem" style={{ width: 80, height: 80, borderRadius: '50%', objectFit: 'cover', border: '1px solid var(--line)' }} />
           <div>
             <h3 style={{ margin: '0 0 3px', fontSize: 16, fontWeight: 800 }}>Nabeeh Mohamed Abo Salem</h3>
             <p style={{ margin: 0, color: 'var(--muted)', fontSize: 12.5, lineHeight: 1.5 }}>
               <strong style={{ color: 'var(--text)' }}>Cybersecurity · Red Teaming & Bug Hunting</strong> — Primary Focus
               <br />
-              <span style={{ color: 'var(--faint)' }}>AI & Science Student — Supporting stack</span> · Samannoud, Al Gharbiyah (مركز سمنود، الغربية)
+              <span style={{ color: 'var(--faint)' }}>AI & Science Student — Supporting stack</span> · Samannoud, Al Gharbiyah
             </p>
           </div>
         </div>
@@ -251,34 +251,28 @@ export default function Home() {
           </p>
         </div>
 
+        <p style={{ margin: '0 0 16px', color: 'var(--muted)', fontSize: 13, lineHeight: 1.7 }}>
+          I study <strong style={{ color: 'var(--text)' }}>AI & Science at Horus University, Class of 2029</strong>, and train in{' '}
+          <strong style={{ color: 'var(--text)' }}>Red Teaming with Hussam Shadeed & CyberGuardX</strong> alongside DEPI Software Testing (ISTQB, STLC, Manual Testing). I build complete, secure systems — UI, database, and tests — and harden them with a hacker mindset.{' '}
+          <strong style={{ color: 'var(--text)' }}>Why work with me?</strong> Reliable, clean code, thorough testing, and security-first thinking. Passionate about breaking to learn, then defending with automation.{' '}
+          <span style={{ color: 'var(--faint)' }}>Python · Java · C++ · Dart · Flutter · Linux · Nmap · Burp Suite · Wireshark · YOLO · OpenCV</span>
+        </p>
+
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16 }}>
           <div style={{ padding: 16, background: 'var(--surface)', border: '1px solid var(--line)', borderRadius: 12 }}>
             <h4 style={{ margin: '0 0 8px', fontSize: 12, fontWeight: 800, letterSpacing: '.08em', textTransform: 'uppercase', color: 'var(--faint)', display: 'flex', alignItems: 'center', gap: 6 }}>
               <GraduationCap size={14} /> Education
             </h4>
             <p style={{ margin: 0, fontSize: 13.5, fontWeight: 700 }}>Horus University — B.Sc. in AI & Science</p>
-            <p style={{ margin: '4px 0 0', color: 'var(--muted)', fontSize: 13 }}>Class of 2029 · Samannoud, Al Gharbiyah (مركز سمنود، الغربية)</p>
-            <p style={{ margin: '6px 0 0', color: 'var(--faint)', fontSize: 11, fontStyle: 'italic' }}>Academic only</p>
+            <p style={{ margin: '4px 0 0', color: 'var(--muted)', fontSize: 13 }}>Class of 2029 · Samannoud, Al Gharbiyah</p>
           </div>
           <div style={{ padding: 16, background: 'var(--surface)', border: '1px solid var(--line)', borderRadius: 12 }}>
             <h4 style={{ margin: '0 0 8px', fontSize: 12, fontWeight: 800, letterSpacing: '.08em', textTransform: 'uppercase', color: 'var(--faint)', display: 'flex', alignItems: 'center', gap: 6 }}>
               <Briefcase size={14} /> Training & Experience
             </h4>
             <p style={{ margin: 0, fontSize: 13.5, fontWeight: 700 }}>DEPI — Software Testing & Red Team Track</p>
-            <p style={{ margin: '4px 0 0', color: 'var(--muted)', fontSize: 13 }}>Jul 2026–Present · Red Team with Hussam Shadeed · CyberGuardX (university-sponsored) · ISTQB, STLC, Manual Testing, Bug Reporting</p>
+            <p style={{ margin: '4px 0 0', color: 'var(--muted)', fontSize: 13 }}>Jul 2026–Present · Hussam Shadeed · CyberGuardX · ISTQB, STLC</p>
           </div>
-        </div>
-
-        <div style={{ marginTop: 16, padding: 16, background: 'var(--bg-soft)', border: '1px solid var(--line-soft)', borderRadius: 12 }}>
-          <h4 style={{ margin: '0 0 10px', fontSize: 11, fontWeight: 800, letterSpacing: '.08em', textTransform: 'uppercase', color: 'var(--faint)' }}>Certifications / Skills / Tools</h4>
-          <div style={{ display: 'flex', flexWrap: 'wrap', gap: 7 }}>
-            {['Python', 'Linux', 'Nmap', 'Burp Suite', 'Wireshark', 'Ettercap', 'Kali', 'Penetration Testing', 'Manual Testing', 'ISTQB', 'Flutter', 'YOLO', 'OpenCV'].map((t) => (
-              <span key={t} className="tag" style={{ fontSize: 11 }}>
-                {t}
-              </span>
-            ))}
-          </div>
-          <p style={{ margin: '8px 0 0', color: 'var(--faint)', fontSize: 11, fontStyle: 'italic' }}>Neatly grouped — not cluttering academic card</p>
         </div>
       </section>
 
