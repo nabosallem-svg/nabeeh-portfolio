@@ -180,15 +180,22 @@ export default function Home() {
       </header>
 
       <section className="hero" id="home">
-        <p className="hero-label">Available for internships & freelance</p>
+        <p className="hero-label">Cybersecurity — Red Teaming & Bug Hunting · Available for internships</p>
         <h1>
           <span className="l1">Nabeeh Mohamed</span>
           <span className="l2">Abo Salem —</span>
           <span className="l3">
-            <span>AI Student &</span> Developer.
+            <span>Cybersecurity</span> & Systems.
           </span>
         </h1>
-        <p className="hero-desc">AI & Science student at Horus University (Class of 2029) and DEPI trainee — Based in Gharbia, Egypt.</p>
+        <p className="hero-desc">
+          <strong style={{ color: 'var(--text)' }}>Cybersecurity (Red Teaming & Bug Hunting)</strong> — break to learn, then build to defend. AI & Science student at Horus University (Class of 2029) — AI as supporting stack. DEPI trainee, based in Samannoud, Al Gharbiyah, Egypt.
+        </p>
+        <div className="hero-meta" style={{ marginTop: 18, display: 'flex', flexWrap: 'wrap', gap: 10 }}>
+          <span className="meta-pill">Samannoud, Al Gharbiyah · Remote</span>
+          <span className="meta-pill">Red Teaming & Bug Hunting</span>
+          <span className="meta-pill">Horus University — 2029</span>
+        </div>
         <div className="hero-actions">
           <a className="btn-primary" href="#projects">
             View projects <ArrowRight size={14} style={{ display: 'inline', marginLeft: 6 }} />
@@ -218,47 +225,60 @@ export default function Home() {
       <section className="section reveal" id="about">
         <div className="section-head">
           <h2>
-            About <span>— basics</span>
+            About <span>— core focus</span>
           </h2>
-          <p>AI student, Red Team trainee & builder — I break to learn, then build to protect.</p>
+          <p>
+            <strong style={{ color: 'var(--text)' }}>Cybersecurity (Red Teaming & Bug Hunting)</strong> is my core — break to learn, then build to defend. AI is my supporting academic stack.
+          </p>
           <div className="line" />
         </div>
-        <div style={{ display: 'grid', gridTemplateColumns: '88px 1fr', gap: 14, alignItems: 'start', marginBottom: 16 }}>
+        <div style={{ display: 'grid', gridTemplateColumns: '88px 1fr', gap: 14, alignItems: 'start', marginBottom: 18 }}>
           <img src="/assets/avatar.png" alt="Nabeeh Mohamed Abo Salem" style={{ width: 80, height: 80, borderRadius: '50%', objectFit: 'cover', border: '1px solid var(--line)' }} />
           <div>
             <h3 style={{ margin: '0 0 3px', fontSize: 16, fontWeight: 800 }}>Nabeeh Mohamed Abo Salem</h3>
             <p style={{ margin: 0, color: 'var(--muted)', fontSize: 12.5, lineHeight: 1.5 }}>
-              <strong style={{ color: 'var(--text)' }}>AI Student · Red Teamer & Bug Hunter</strong> — Horus University · Gharbia, Egypt
+              <strong style={{ color: 'var(--text)' }}>Cybersecurity · Red Teaming & Bug Hunting</strong> — Primary Focus
+              <br />
+              <span style={{ color: 'var(--faint)' }}>AI & Science Student — Supporting stack</span> · Samannoud, Al Gharbiyah (مركز سمنود، الغربية)
             </p>
           </div>
         </div>
 
         <div style={{ padding: 12, background: 'var(--surface)', border: '1px solid var(--line)', borderRadius: 12, marginBottom: 14, borderLeft: '3px solid var(--text)' }}>
-          <h4 style={{ margin: 0, fontSize: 11, fontWeight: 800, letterSpacing: '.06em', textTransform: 'uppercase', color: 'var(--text)' }}>★ Data Gris Store — Core System</h4>
+          <h4 style={{ margin: 0, fontSize: 11, fontWeight: 800, letterSpacing: '.06em', textTransform: 'uppercase', color: 'var(--text)' }}>★ Data Gris Store — Core System Build</h4>
           <p style={{ margin: '5px 0 0', color: 'var(--muted)', fontSize: 12.5, lineHeight: 1.6 }}>
-            Flutter store & inventory — POS, stock, suppliers, sales, barcode, treasury. Built with a friend, my main system build.
+            Flutter store & inventory — POS, stock, suppliers, sales, barcode, treasury. Built with a friend, this system sharpens my secure-systems thinking.
           </p>
         </div>
-
-        <p style={{ margin: '0 0 14px', color: 'var(--muted)', fontSize: 13, lineHeight: 1.65 }}>
-          Focused on <strong style={{ color: 'var(--text)' }}>Red Teaming & Bug Hunting</strong> — break to learn, build to defend. Training with <strong style={{ color: 'var(--text)' }}>Hussam Shadeed</strong> + CyberGuardX. Build secure systems, test them, and harden them. Tools: Python, Linux, Nmap, Burp Suite, Wireshark.
-        </p>
 
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16 }}>
           <div style={{ padding: 16, background: 'var(--surface)', border: '1px solid var(--line)', borderRadius: 12 }}>
             <h4 style={{ margin: '0 0 8px', fontSize: 12, fontWeight: 800, letterSpacing: '.08em', textTransform: 'uppercase', color: 'var(--faint)', display: 'flex', alignItems: 'center', gap: 6 }}>
               <GraduationCap size={14} /> Education
             </h4>
-            <p style={{ margin: 0, fontSize: 13.5, fontWeight: 700 }}>Horus University — B.Sc. AI & Science</p>
-            <p style={{ margin: '4px 0 0', color: 'var(--muted)', fontSize: 13 }}>Class of 2029 · Markaz Zefta, Al Gharbiyah</p>
+            <p style={{ margin: 0, fontSize: 13.5, fontWeight: 700 }}>Horus University — B.Sc. in AI & Science</p>
+            <p style={{ margin: '4px 0 0', color: 'var(--muted)', fontSize: 13 }}>Class of 2029 · Samannoud, Al Gharbiyah (مركز سمنود، الغربية)</p>
+            <p style={{ margin: '6px 0 0', color: 'var(--faint)', fontSize: 11, fontStyle: 'italic' }}>Academic only</p>
           </div>
           <div style={{ padding: 16, background: 'var(--surface)', border: '1px solid var(--line)', borderRadius: 12 }}>
             <h4 style={{ margin: '0 0 8px', fontSize: 12, fontWeight: 800, letterSpacing: '.08em', textTransform: 'uppercase', color: 'var(--faint)', display: 'flex', alignItems: 'center', gap: 6 }}>
-              <Briefcase size={14} /> Training
+              <Briefcase size={14} /> Training & Experience
             </h4>
-            <p style={{ margin: 0, fontSize: 13.5, fontWeight: 700 }}>DEPI — Software Testing · Red Team</p>
-            <p style={{ margin: '4px 0 0', color: 'var(--muted)', fontSize: 13 }}>DEPI Jul 2026–Present (ISTQB, STLC) · Red Team with Hussam Shadeed · CyberGuardX</p>
+            <p style={{ margin: 0, fontSize: 13.5, fontWeight: 700 }}>DEPI — Software Testing & Red Team Track</p>
+            <p style={{ margin: '4px 0 0', color: 'var(--muted)', fontSize: 13 }}>Jul 2026–Present · Red Team with Hussam Shadeed · CyberGuardX (university-sponsored) · ISTQB, STLC, Manual Testing, Bug Reporting</p>
           </div>
+        </div>
+
+        <div style={{ marginTop: 16, padding: 16, background: 'var(--bg-soft)', border: '1px solid var(--line-soft)', borderRadius: 12 }}>
+          <h4 style={{ margin: '0 0 10px', fontSize: 11, fontWeight: 800, letterSpacing: '.08em', textTransform: 'uppercase', color: 'var(--faint)' }}>Certifications / Skills / Tools</h4>
+          <div style={{ display: 'flex', flexWrap: 'wrap', gap: 7 }}>
+            {['Python', 'Linux', 'Nmap', 'Burp Suite', 'Wireshark', 'Ettercap', 'Kali', 'Penetration Testing', 'Manual Testing', 'ISTQB', 'Flutter', 'YOLO', 'OpenCV'].map((t) => (
+              <span key={t} className="tag" style={{ fontSize: 11 }}>
+                {t}
+              </span>
+            ))}
+          </div>
+          <p style={{ margin: '8px 0 0', color: 'var(--faint)', fontSize: 11, fontStyle: 'italic' }}>Neatly grouped — not cluttering academic card</p>
         </div>
       </section>
 
@@ -420,7 +440,7 @@ export default function Home() {
               </div>
               <div>
                 <MapPin size={14} />
-                <span>Gharbia, Egypt — Remote</span>
+                <span>Samannoud, Al Gharbiyah — Remote</span>
               </div>
               <div>
                 <Code2 size={14} />
