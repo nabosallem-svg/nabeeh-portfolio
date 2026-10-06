@@ -351,7 +351,6 @@ html.scrolled .topbar{
 .art-software{--c:#8B5CF6}
 .art-web{--c:#22D3EE}
 .art-ai{--c:#A3E635}
-.art-depi{--c:#F59E0B}
 .art::before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 80% 110%,color-mix(in srgb,var(--c) 40%,transparent),transparent 55%)}
 .art::after{content:"";position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.04) 1px,transparent 1px);background-size:22px 22px}
 .art-bar{position:relative;z-index:1;display:flex;align-items:center;gap:6px;padding:10px 12px;border-bottom:1px solid rgba(255,255,255,.06);font:10.5px var(--font-geist-mono),monospace;color:#8A91A0}
