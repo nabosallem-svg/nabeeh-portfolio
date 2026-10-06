@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import {
   ArrowRight,
   ArrowUpRight,
@@ -18,6 +18,7 @@ import {
   Moon,
   Sun,
 } from 'lucide-react';
+import { groups, projects, type Project, type ProjectGroup } from './projects';
 const Github = Code2;
 
 // === SKILLS (static) ===
@@ -28,86 +29,121 @@ const skills = [
   { label: 'Cybersecurity & QA', items: ['Nmap', 'Burp Suite', 'Penetration Testing', 'Manual Testing', 'ISTQB'] },
 ];
 
-// ==========================================
-// /* ★★★ PUT YOUR REAL URLS HERE — EDIT THESE 4 LINES BELOW ★★★ */
-// Each project has TWO functional <a> links: GitHub + Open/Live. Never use <button>.
-// For APK/JAR, keep the `download` attribute — it forces download instead of preview.
-// ==========================================
-type Project = (typeof projects)[number];
-const projects = [
-  {
-    id: '01',
-    type: 'SaaS · Security — Featured',
-    title: 'RedPulse / ReconPilot',
-    desc: 'Automated penetration testing platform — subdomain discovery, live probing and vulnerability scanning with reporting.',
-    tech: ['FastAPI', 'Next.js', 'Supabase', 'Vercel'],
-    year: '2026',
-    image: '/assets/project-reconpilot.png',
-    // /* ★ PUT YOUR REDPULSE GITHUB LINK HERE ★ */  ⬇️ paste your repo URL
-    github: 'https://github.com/nabosallem-svg/RedPulse',
-    // /* ★ PUT YOUR REDPULSE LIVE LINK HERE ★ */  ⬇️ paste your Vercel URL (use redpulse-frontend — the "nine" link is dead)
-    demo: 'https://redpulse-frontend.vercel.app',
-    demoLabel: 'Launch RedPulse',
-    howTitle: 'How it works',
-    how: 'FastAPI runs Subfinder → httpx → Nuclei/Nmap → stores assets & findings in PostgreSQL → Next.js dashboard shows results with real-time status. Auth via Supabase, payments via Stripe.',
-    run: '1) Clone: git clone https://github.com/nabosallem-svg/RedPulse\n2) cd reconpilot && cp .env.example .env\n3) docker-compose up  →  frontend http://localhost:3000  |  api http://localhost:8000',
-    featured: true,
-  },
-  {
-    id: '02',
-    type: 'Business Software',
-    title: 'Data Gris Store',
-    desc: 'Comprehensive store & inventory system — POS, suppliers, purchases, sales, barcode, treasury and commissions. Built with my friend.',
-    tech: ['Dart', 'Hive', 'Firebase'],
-    year: '2025',
-    image: '/assets/project-store.png',
-    // /* ★ PUT YOUR DATA GRIS GITHUB LINK HERE — PRIVATE NOW ★ */
-    github: 'https://github.com/nabosallem-svg/DataGris-Store',
-    // /* ★ PUT YOUR APK LINK HERE ★ */  — local file in /public or external URL. Keep `download` attribute on the <a> tag!
-    demo: '/DataGris-App.apk',
-    demoLabel: 'Download APK',
-    howTitle: 'How inventory & sales work',
-    how: 'Flutter POS scans barcode → Hive caches locally → Firebase syncs → stock auto-deducts, low-stock alerts trigger, treasury updates and invoices generate. Works offline then syncs.',
-    run: '1) Download APK above and install on Android\n2) Or: flutter pub get && flutter run  (Hive local DB + Firebase)',
-    featured: false,
-  },
-  {
-    id: '03',
-    type: 'Backend · Java',
-    title: 'VELOX — Modular Commerce Engine',
-    desc: 'E-commerce engine and delivery system built with Java and Maven using object-oriented design.',
-    tech: ['Java 17', 'Maven', 'OOP'],
-    year: '2025',
-    image: '/assets/project-velox.png',
-    // /* ★ PUT YOUR VELOX GITHUB LINK HERE ★ */
-    github: 'https://github.com/nabosallem-svg/VELOX',
-    // /* ★ PUT YOUR JAR LINK HERE ★ */  — keep `download` attribute!
-    demo: '/Velox.jar',
-    demoLabel: 'Download JAR',
-    howTitle: 'How to run locally',
-    how: 'Polymorphic stores (Fashion/Tech/Restaurant) with Strategy discounts and pluggable payments. Delivery simulation included.',
-    run: '1) java -jar Velox.jar\n2) Or: mvn clean package && mvn exec:java\n3) Or: mvn package && java -jar target/Velox-1.0.jar',
-    featured: false,
-  },
-  {
-    id: '04',
-    type: 'Desktop · C++',
-    title: 'Numerical Calculator GUI',
-    desc: 'Advanced desktop calculator with a clean Qt interface — precise operations and error handling.',
-    tech: ['C++', 'Qt Creator', 'CMake'],
-    year: '2024',
-    image: '/assets/project-calculator.png',
-    // /* ★ PUT YOUR CALCULATOR GITHUB LINK HERE — PRIVATE NOW ★ */
-    github: 'https://github.com/nabosallem-svg/Numerical-Calculator-GUI',
-    // /* ★ PUT YOUR CALCULATOR DEMO/REQUEST LINK HERE ★ */
-    demo: 'https://github.com/nabosallem-svg/Numerical-Calculator-GUI',
-    demoLabel: 'Open Repo',
-    howTitle: 'How to run locally',
-    how: 'Qt Widgets GUI with expression parser and validation. CMake builds on Windows/Linux.',
-    run: '1) Qt Creator → open CMakeLists.txt → Build & Run\n2) Or: cmake -B build && cmake --build build && ./build/Calculator',
-    featured: false,
-  },
-];
+const GLYPHS = '!<>-_\\/[]{}—=+*^?#01ABCDEFX';
+
+// /* ★ "DECRYPT" EFFECT — text starts scrambled and resolves to the real words ★ */
+function Scramble({ text, delay = 0 }: { text: string; delay?: number }) {
+  const [out, setOut] = useState(text);
+  useEffect(() => {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    let frame = 0;
+    let raf = 0;
+    const total = 26 + text.length;
+    const start = performance.now() + delay;
+    const tick = (now: number) => {
+      if (now < start) {
+        setOut(text.replace(/\S/g, () => GLYPHS[(Math.random() * GLYPHS.length) | 0]));
+        raf = requestAnimationFrame(tick);
+        return;
+      }
+      frame++;
+      const revealed = Math.floor((frame / total) * text.length * 1.4);
+      setOut(
+        text
+          .split('')
+          .map((c, i) => (c === ' ' || i < revealed ? c : GLYPHS[(Math.random() * GLYPHS.length) | 0]))
+          .join(''),
+      );
+      if (revealed < text.length) raf = requestAnimationFrame(tick);
+      else setOut(text);
+    };
+    raf = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(raf);
+  }, [text, delay]);
+  return (
+    <span aria-label={text} className="scramble">
+      <span aria-hidden="true">{out}</span>
+    </span>
+  );
+}
+
+// /* ★ CURSOR SPOTLIGHT + SUBTLE TILT FOR CARDS ★ */
+function onCardMove(e: React.PointerEvent<HTMLElement>) {
+  const el = e.currentTarget;
+  const r = el.getBoundingClientRect();
+  const x = e.clientX - r.left;
+  const y = e.clientY - r.top;
+  el.style.setProperty('--x', `${x}px`);
+  el.style.setProperty('--y', `${y}px`);
+  el.style.setProperty('--rx', `${((y / r.height) - 0.5) * -4}deg`);
+  el.style.setProperty('--ry', `${((x / r.width) - 0.5) * 4}deg`);
+}
+function onCardLeave(e: React.PointerEvent<HTMLElement>) {
+  e.currentTarget.style.setProperty('--rx', '0deg');
+  e.currentTarget.style.setProperty('--ry', '0deg');
+}
+
+// /* ★ TERMINAL — replays a real recorded run line by line ★ */
+function Terminal({ text }: { text: string }) {
+  const lines = text.split('\n');
+  const [n, setN] = useState(1);
+  const [run, setRun] = useState(0);
+  useEffect(() => {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      setN(lines.length);
+      return;
+    }
+    setN(1);
+    const t = setInterval(() => setN((v) => Math.min(v + 1, lines.length)), 70);
+    return () => clearInterval(t);
+  }, [text, run, lines.length]);
+  const bodyRef = useRef<HTMLPreElement>(null);
+  useEffect(() => {
+    bodyRef.current?.scrollTo({ top: bodyRef.current.scrollHeight });
+  }, [n]);
+  return (
+    <div className="term">
+      <div className="term-bar">
+        <i />
+        <i />
+        <i />
+        <span>Output — real run</span>
+        <button type="button" onClick={() => setRun((r) => r + 1)} aria-label="Replay output">
+          ↻ Replay
+        </button>
+      </div>
+      <pre ref={bodyRef}>
+        {lines.slice(0, n).map((l, i) => (
+          <span key={i} className={l.startsWith('$ ') ? 'term-cmd' : undefined}>
+            {l}
+            {'\n'}
+          </span>
+        ))}
+        {n < lines.length && <span className="art-caret" />}
+      </pre>
+    </div>
+  );
+}
+
+// /* ★ PLACEHOLDER ART FOR PROJECTS WITHOUT A SCREENSHOT ★ */
+function ProjectArt({ p }: { p: Project }) {
+  if (p.image) return <img src={p.image} alt={p.title} loading="lazy" />;
+  return (
+    <div className={`art art-${p.group}`} aria-hidden="true">
+      <div className="art-bar">
+        <i />
+        <i />
+        <i />
+        <span>{p.github ? p.github.replace('https://github.com/', '') : p.title}</span>
+      </div>
+      <div className="art-body">
+        <span className="art-prompt">$</span> {p.tech.join(' · ')}
+        <span className="art-caret" />
+      </div>
+      <div className="art-big">{p.id}</div>
+    </div>
+  );
+}
 
 export default function Home() {
   const [theme, setTheme] = useState<'light' | 'dark'>('light');
@@ -116,6 +152,9 @@ export default function Home() {
   const [sent, setSent] = useState(false);
   const [toast, setToast] = useState<string | null>(null);
   const [selected, setSelected] = useState<Project | null>(null);
+  const [filter, setFilter] = useState<'all' | ProjectGroup>('all');
+  const [active, setActive] = useState('home');
+  const bgRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const saved = localStorage.getItem('theme') as 'light' | 'dark' | null;
@@ -134,6 +173,57 @@ export default function Home() {
     setTheme(next);
     localStorage.setItem('theme', next);
   }
+
+  // /* ★ SCROLL PROGRESS + BACKGROUND GLOW FOLLOWS CURSOR ★ */
+  useEffect(() => {
+    const root = document.documentElement;
+    const onScroll = () => {
+      const max = root.scrollHeight - root.clientHeight;
+      root.style.setProperty('--progress', String(max > 0 ? root.scrollTop / max : 0));
+      root.classList.toggle('scrolled', root.scrollTop > 8);
+    };
+    const onMove = (e: PointerEvent) => {
+      bgRef.current?.style.setProperty('--mx', `${e.clientX}px`);
+      bgRef.current?.style.setProperty('--my', `${e.clientY}px`);
+    };
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('pointermove', onMove, { passive: true });
+    return () => {
+      window.removeEventListener('scroll', onScroll);
+      window.removeEventListener('pointermove', onMove);
+    };
+  }, []);
+
+  // /* ★ ACTIVE NAV LINK FOLLOWS THE SECTION ON SCREEN ★ */
+  useEffect(() => {
+    const ids = ['home', 'about', 'projects', 'contact'];
+    const o = new IntersectionObserver(
+      (entries) => entries.forEach((en) => en.isIntersecting && setActive(en.target.id)),
+      { rootMargin: '-45% 0px -50% 0px' },
+    );
+    ids.forEach((id) => {
+      const el = document.getElementById(id);
+      if (el) o.observe(el);
+    });
+    return () => o.disconnect();
+  }, []);
+
+  // /* ★ REVEAL ON SCROLL ★ */
+  useEffect(() => {
+    const o = new IntersectionObserver(
+      (entries) =>
+        entries.forEach((en) => {
+          if (en.isIntersecting) {
+            en.target.classList.add('visible');
+            o.unobserve(en.target);
+          }
+        }),
+      { threshold: 0.12 },
+    );
+    document.querySelectorAll('.reveal:not(.visible)').forEach((el) => o.observe(el));
+    return () => o.disconnect();
+  }, [filter]);
 
   // /* ★ CLOSE ON ESCAPE + LOCK SCROLL ★ */
   useEffect(() => {
@@ -167,62 +257,103 @@ export default function Home() {
     setForm({ name: '', email: '', message: '' });
   }
 
+  const shown = projects.filter((p) => filter === 'all' || p.group === filter);
+
   return (
     <main>
+      {/* ——— Animated background ——— */}
+      <div className="bg" ref={bgRef} aria-hidden="true">
+        <div className="bg-grid" />
+        <div className="bg-orb orb-a" />
+        <div className="bg-orb orb-b" />
+        <div className="bg-spot" />
+      </div>
+      <div className="progress" aria-hidden="true" />
+
       <header className="topbar">
         <a className="brand" href="#home">
+          <span className="brand-dot" />
           NABEEH <span>— Portfolio 2026</span>
         </a>
         <nav className="nav" aria-label="Primary">
-          <a href="#about">About</a>
-          <a href="#projects">Projects</a>
-          <a href="#contact">Contact</a>
+          {['about', 'projects', 'contact'].map((id) => (
+            <a key={id} href={`#${id}`} className={active === id ? 'active' : ''}>
+              {id[0].toUpperCase() + id.slice(1)}
+            </a>
+          ))}
         </nav>
         <div className="topbar-actions">
           <button className="theme-toggle" onClick={toggleTheme} aria-label={theme === 'dark' ? 'Light mode' : 'Dark mode'} title={theme === 'dark' ? 'Light mode' : 'Dark mode'}>
             {mounted ? (theme === 'dark' ? <Sun size={15} /> : <Moon size={15} />) : <Moon size={15} style={{ opacity: 0 }} />}
           </button>
           <a className="cta-min" href="#contact">
-            Let&apos;s talk <ArrowUpRight size={13} style={{ display: 'inline', marginLeft: 6, verticalAlign: -1 }} />
+            Let&apos;s talk <ArrowUpRight size={13} />
           </a>
         </div>
       </header>
 
       <section className="hero" id="home">
-        <p className="hero-label">Cybersecurity — Red Teaming & Bug Hunting · Available for internships</p>
-        <h1>
-          <span className="l1">Nabeeh Mohamed</span>
-          <span className="l2">Abo Salem —</span>
-          <span className="l3">
-            <span>Red Teaming</span> & Bug Hunting.
-          </span>
-        </h1>
-        <p className="hero-desc">
-          <strong style={{ color: 'var(--text)' }}>Cybersecurity (Red Teaming & Bug Hunting)</strong> — break to learn, then build to defend. AI & Science student at Horus University (Class of 2029) — AI as supporting stack. DEPI trainee, based in Samannoud, Al Gharbiyah, Egypt.
-        </p>
-        <div className="hero-meta" style={{ marginTop: 18, display: 'flex', flexWrap: 'wrap', gap: 10 }}>
-          <span className="meta-pill">Samannoud, Al Gharbiyah · Remote</span>
-          <span className="meta-pill">Red Teaming & Bug Hunting</span>
-          <span className="meta-pill">Horus University — 2029</span>
+        <div className="hero-main">
+          <p className="hero-label">
+            <span className="pulse" />
+            Cybersecurity — Red Teaming & Bug Hunting · Available for internships
+          </p>
+          <h1>
+            <span className="l1">
+              <Scramble text="Nabeeh Mohamed" delay={150} />
+            </span>
+            <span className="l2">
+              <Scramble text="Abo Salem —" delay={350} />
+            </span>
+            <span className="l3">
+              <span className="accent">
+                <Scramble text="Red Teaming" delay={550} />
+              </span>{' '}
+              <Scramble text="& Bug Hunting." delay={700} />
+              <span className="caret" aria-hidden="true" />
+            </span>
+          </h1>
+          <p className="hero-desc">
+            <strong>Cybersecurity (Red Teaming & Bug Hunting)</strong> — break to learn, then build to defend. AI & Science student at Horus University (Class of 2029) — AI as supporting stack. DEPI trainee, based in Samannoud, Al Gharbiyah, Egypt.
+          </p>
+          <div className="hero-meta">
+            <span className="meta-pill">Samannoud, Al Gharbiyah · Remote</span>
+            <span className="meta-pill">Red Teaming & Bug Hunting</span>
+            <span className="meta-pill">Horus University — 2029</span>
+          </div>
+          <div className="hero-actions">
+            <a className="btn-primary" href="#projects">
+              View projects <ArrowRight size={14} />
+            </a>
+            <a className="btn-ghost" href="/Nabeeh_Mohamed_CV.pdf" target="_blank" rel="noreferrer">
+              <Download size={14} /> Download CV
+            </a>
+            <a className="btn-ghost" href="https://github.com/nabosallem-svg" target="_blank" rel="noreferrer">
+              <Code2 size={14} /> GitHub
+            </a>
+          </div>
         </div>
-        <div className="hero-actions">
-          <a className="btn-primary" href="#projects">
-            View projects <ArrowRight size={14} style={{ display: 'inline', marginLeft: 6 }} />
-          </a>
-          <a className="btn-ghost" href="/Nabeeh_Mohamed_CV.pdf" target="_blank" rel="noreferrer">
-            <Download size={14} style={{ display: 'inline', marginRight: 6, verticalAlign: -2 }} /> Download CV
-          </a>
-          <a className="btn-ghost" href="https://github.com/nabosallem-svg" target="_blank" rel="noreferrer">
-            <Code2 size={14} style={{ display: 'inline', marginRight: 6, verticalAlign: -2 }} /> GitHub
-          </a>
+
+        {/* Radar — decorative */}
+        <div className="radar" aria-hidden="true">
+          <div className="radar-ring r1" />
+          <div className="radar-ring r2" />
+          <div className="radar-ring r3" />
+          <div className="radar-cross" />
+          <div className="radar-sweep" />
+          <i className="blip b1" />
+          <i className="blip b2" />
+          <i className="blip b3" />
+          <i className="blip b4" />
         </div>
+
         <div className="skills-mini reveal">
           <h3>Skills — simple, grouped</h3>
           {skills.map((g, i) => (
-            <div key={g.label} className="tag-row reveal" style={{ transitionDelay: `${i * 0.06}s` } as any}>
+            <div key={g.label} className="tag-row">
               <b>{g.label}</b>
-              {g.items.map((t) => (
-                <span key={t} className="tag">
+              {g.items.map((t, j) => (
+                <span key={t} className="tag" style={{ '--d': `${i * 0.08 + j * 0.04}s` } as React.CSSProperties}>
                   {t}
                 </span>
               ))}
@@ -231,48 +362,52 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="section reveal" id="about">
-        <div className="section-head">
+      <section className="section" id="about">
+        <div className="section-head reveal">
           <h2>
             About <span>— core focus</span>
           </h2>
           <p>
-            <strong style={{ color: 'var(--text)' }}>Cybersecurity (Red Teaming & Bug Hunting)</strong> is my core — break to learn, then build to defend. AI is my supporting stack.
+            <strong>Cybersecurity (Red Teaming & Bug Hunting)</strong> is my core — break to learn, then build to defend. AI is my supporting stack.
           </p>
           <div className="line" />
         </div>
-        <div style={{ display: 'grid', gridTemplateColumns: '88px 1fr', gap: 14, alignItems: 'start', marginBottom: 16 }}>
-          <img src="/assets/avatar.png" alt="Nabeeh Mohamed Abo Salem" style={{ width: 80, height: 80, borderRadius: '50%', objectFit: 'cover', border: '1px solid var(--line)' }} />
-          <div>
-            <h3 style={{ margin: '0 0 3px', fontSize: 16, fontWeight: 800 }}>Nabeeh Mohamed Abo Salem</h3>
-            <p style={{ margin: 0, color: 'var(--muted)', fontSize: 12.5, lineHeight: 1.5 }}>
-              <strong style={{ color: 'var(--text)' }}>Cybersecurity · Red Teaming & Bug Hunting</strong> — Primary Focus
-              <br />
-              <span style={{ color: 'var(--faint)' }}>AI & Science Student — Supporting stack</span> · Horus University
-            </p>
+        <div className="about-card reveal d1">
+          <div className="about-id">
+            <div className="avatar-ring">
+              <img src="/assets/avatar.png" alt="Nabeeh Mohamed Abo Salem" />
+            </div>
+            <div>
+              <h3>Nabeeh Mohamed Abo Salem</h3>
+              <p>
+                <strong>Cybersecurity · Red Teaming & Bug Hunting</strong> — Primary Focus
+                <br />
+                <span className="faint">AI & Science Student — Supporting stack</span> · Horus University
+              </p>
+            </div>
           </div>
+
+          <p className="about-text">
+            Cybersecurity (Red Teaming & Bug Hunting) is my core focus. I am an AI & Science student at Horus University (Class of 2029), currently training in software testing with DEPI and Red Teaming with Hussam Shady & CyberGuardX. I build and secure full systems with a hacker mindset.
+            <br />
+            <span className="faint small">Core Stack: Python · Java · C++ · Dart · Linux · Nmap · Burp Suite · Wireshark · YOLO</span>
+          </p>
         </div>
 
-        <p style={{ margin: '0 0 18px', color: 'var(--muted)', fontSize: 13, lineHeight: 1.7 }}>
-          Cybersecurity (Red Teaming & Bug Hunting) is my core focus. I am an AI & Science student at Horus University (Class of 2029), currently training in software testing with DEPI and Red Teaming with Hussam Shady & CyberGuardX. I build and secure full systems with a hacker mindset.
-          <br />
-          <span style={{ color: 'var(--faint)', fontSize: 12 }}>Core Stack: Python · Java · C++ · Dart · Linux · Nmap · Burp Suite · Wireshark · YOLO</span>
-        </p>
-
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16 }}>
-          <div style={{ padding: 16, background: 'var(--surface)', border: '1px solid var(--line)', borderRadius: 12 }}>
-            <h4 style={{ margin: '0 0 8px', fontSize: 12, fontWeight: 800, letterSpacing: '.08em', textTransform: 'uppercase', color: 'var(--faint)', display: 'flex', alignItems: 'center', gap: 6 }}>
+        <div className="info-grid">
+          <div className="info-card reveal d2" onPointerMove={onCardMove} onPointerLeave={onCardLeave}>
+            <h4>
               <GraduationCap size={14} /> Education
             </h4>
-            <p style={{ margin: 0, fontSize: 13.5, fontWeight: 700 }}>Horus University — B.Sc. in AI & Science</p>
-            <p style={{ margin: '4px 0 0', color: 'var(--muted)', fontSize: 13 }}>Class of 2029 · Samannoud, Al Gharbiyah</p>
+            <p className="info-title">Horus University — B.Sc. in AI & Science</p>
+            <p className="info-sub">Class of 2029 · Samannoud, Al Gharbiyah</p>
           </div>
-          <div style={{ padding: 16, background: 'var(--surface)', border: '1px solid var(--line)', borderRadius: 12 }}>
-            <h4 style={{ margin: '0 0 8px', fontSize: 12, fontWeight: 800, letterSpacing: '.08em', textTransform: 'uppercase', color: 'var(--faint)', display: 'flex', alignItems: 'center', gap: 6 }}>
+          <div className="info-card reveal d3" onPointerMove={onCardMove} onPointerLeave={onCardLeave}>
+            <h4>
               <Briefcase size={14} /> Training & Experience
             </h4>
-            <p style={{ margin: 0, fontSize: 13.5, fontWeight: 700 }}>DEPI — Software Testing & Red Team Track</p>
-            <p style={{ margin: '4px 0 0', color: 'var(--muted)', fontSize: 13 }}>Jul 2026–Present · Hussam Shadeed · CyberGuardX · ISTQB, STLC</p>
+            <p className="info-title">DEPI — Software Testing & Red Team Track</p>
+            <p className="info-sub">Jul 2026–Present · Hussam Shadeed · CyberGuardX · ISTQB, STLC</p>
           </div>
         </div>
       </section>
@@ -281,42 +416,68 @@ export default function Home() {
       <section className="section" id="projects">
         <div className="section-head reveal">
           <h2>
-            Selected <span>work — 4 projects</span>
+            Selected <span>work — {projects.length} projects</span>
           </h2>
           <p>Click any card to open its modal — backdrop or Esc closes it.</p>
           <div className="line" />
         </div>
-        <div className="project-grid">
-          {projects.map((p, i) => (
+
+        <div className="filters reveal" role="tablist" aria-label="Filter projects">
+          {groups.map((g) => {
+            const n = g.key === 'all' ? projects.length : projects.filter((p) => p.group === g.key).length;
+            return (
+              <button key={g.key} role="tab" aria-selected={filter === g.key} className={filter === g.key ? 'chip on' : 'chip'} onClick={() => setFilter(g.key)}>
+                {g.label} <em>{n}</em>
+              </button>
+            );
+          })}
+        </div>
+
+        <div className="project-grid reveal" key={filter}>
+          {shown.map((p, i) => (
             <article
               key={p.title}
-              className={`project reveal ${p.featured ? 'project-featured' : ''}`}
-              style={{ transitionDelay: `${i * 0.06}s` } as any}
+              className={`project ${p.featured ? 'project-featured' : ''}`}
+              style={{ '--i': i } as React.CSSProperties}
               // /* ★ CLICK CARD → OPEN ITS SPECIFIC MODAL ★ */
               onClick={() => setSelected(p)}
+              onPointerMove={onCardMove}
+              onPointerLeave={onCardLeave}
               role="button"
               tabIndex={0}
               onKeyDown={(e) => (e.key === 'Enter' || e.key === ' ') && setSelected(p)}
               aria-label={`Open ${p.title} details`}
             >
-              <div className="project-top">
-                <span className="project-type">{p.type}</span>
-                <span className="project-year">{p.year}</span>
+              <div className="project-media">
+                <ProjectArt p={p} />
+                {p.featured && <span className="featured-badge">★ Featured</span>}
+                {p.video && <span className="video-badge">▶ Demo video</span>}
+                {!p.video && (p.live || p.demo.startsWith('/demos/') || p.demo.includes('vercel.app')) && <span className="video-badge">▶ Live demo</span>}
               </div>
-              <h3>{p.title}</h3>
-              <p>{p.desc}</p>
-              <div className="project-tech">
-                {p.tech.map((t) => (
-                  <span key={t}>{t}</span>
-                ))}
-              </div>
-              <div className="project-links" style={{ pointerEvents: 'none' }}>
-                <span>
-                  Open <ArrowUpRight size={12} />
-                </span>
-                <span>
-                  GitHub <Github size={12} />
-                </span>
+              <div className="project-body">
+                <div className="project-top">
+                  <span className="project-type">{p.type}</span>
+                  <span className="project-year">{p.year}</span>
+                </div>
+                <h3>{p.title}</h3>
+                <p>{p.desc}</p>
+                <div className="project-tech">
+                  {p.tech.map((t) => (
+                    <span key={t}>{t}</span>
+                  ))}
+                </div>
+                <div className="project-links" style={{ pointerEvents: 'none' }}>
+                  {(p.demo || !p.github) && (
+                    <span>
+                      Open <ArrowUpRight size={12} />
+                    </span>
+                  )}
+                  {p.github && (
+                    <span>
+                      GitHub <Github size={12} />
+                    </span>
+                  )}
+                </div>
               </div>
             </article>
           ))}
@@ -331,8 +492,12 @@ export default function Home() {
             <button className="modal-close" onClick={() => setSelected(null)} aria-label="Close">
               <X size={16} />
             </button>
-            <div className="modal-media">
-              <img src={selected.image} alt={selected.title} />
+            <div className={selected.video ? 'modal-media modal-video' : 'modal-media'}>
+              {selected.video ? (
+                <video src={selected.video} poster={selected.image} autoPlay muted loop playsInline controls aria-label={`${selected.title} walkthrough`} />
+              ) : (
+                <ProjectArt p={selected} />
+              )}
               {selected.featured && <span className="modal-badge">Featured — Live SaaS</span>}
             </div>
             <div className="modal-body">
@@ -351,37 +516,47 @@ export default function Home() {
                 <p>{selected.how}</p>
                 <pre>{selected.run}</pre>
               </div>
+              {selected.output && <Terminal text={selected.output} />}
 
-              {/* /* ★ TWO FUNCTIONAL <a> TAGS — NO <button href="#"> — EDIT HREFS ABOVE ★ */ }
-              <div className="modal-actions">
-                {/* /* ★ OPEN/LIVE BUTTON — <a> with href + target="_blank" ★ */}
-                <a
-                  className={selected.featured ? 'btn-primary modal-primary' : 'btn-primary'}
-                  href={selected.demo}
-                  target={selected.demo.startsWith('http') || selected.demo.startsWith('mailto:') ? '_blank' : undefined}
-                  rel="noreferrer"
-                  // /* ★ DOWNLOAD ATTRIBUTE — ONLY FOR APK/JAR (starts with "/") ★ */
-                  download={selected.demo.startsWith('/') ? '' : undefined}
-                >
-                  {selected.featured ? (
-                    <>
-                      <Play size={14} style={{ display: 'inline', marginRight: 6, verticalAlign: -2 }} />
-                      Launch RedPulse
-                    </>
-                  ) : (
-                    <>
-                      <ExternalLink size={14} style={{ display: 'inline', marginRight: 6, verticalAlign: -2 }} />
-                      {selected.demoLabel}
-                    </>
-                  )}
+              {selected.live && (
+                <a className="btn-primary live-btn" href={selected.live} target="_blank" rel="noreferrer">
+                  <Play size={14} />
+                  {selected.liveLabel}
                 </a>
-                {/* /* ★ GITHUB BUTTON — <a> with href + target="_blank" ★ */}
-                <a className="btn-ghost" href={selected.github} target="_blank" rel="noreferrer">
-                  <Github size={14} style={{ display: 'inline', marginRight: 6, verticalAlign: -2 }} />
-                  GitHub
-                </a>
+              )}
+
+              {/* /* ★ FUNCTIONAL <a> TAGS — EMPTY LINKS ARE HIDDEN ★ */}
+              <div className={selected.demo && selected.github ? 'modal-actions' : 'modal-actions single'}>
+                {selected.demo && (
+                  <a
+                    className={selected.featured ? 'btn-primary modal-primary' : selected.live ? 'btn-ghost' : 'btn-primary'}
+                    href={selected.demo}
+                    target={selected.demo.startsWith('http') || selected.demo.endsWith('.html') ? '_blank' : undefined}
+                    rel="noreferrer"
+                    // /* ★ DOWNLOAD ATTRIBUTE — ONLY FOR APK/JAR/ZIP/EXE FILES ★ */
+                    download={/\.(apk|jar|zip|exe)$/i.test(selected.demo) ? '' : undefined}
+                  >
+                    {selected.featured ? (
+                      <>
+                        <Play size={14} />
+                        Launch RedPulse
+                      </>
+                    ) : (
+                      <>
+                        {/\.(apk|jar|zip|exe)$/i.test(selected.demo) ? <Download size={14} /> : <ExternalLink size={14} />}
+                        {selected.demoLabel}
+                      </>
+                    )}
+                  </a>
+                )}
+                {selected.github && (
+                  <a className={selected.demo || selected.live ? 'btn-ghost' : 'btn-primary'} href={selected.github} target="_blank" rel="noreferrer">
+                    <Github size={14} />
+                    GitHub
+                  </a>
+                )}
               </div>
-              <p style={{ margin: '10px 0 0', color: 'var(--faint)', fontSize: 11, textAlign: 'center' }}>Click backdrop or press Esc to close</p>
+              <p className="modal-hint">Click backdrop or press Esc to close</p>
             </div>
           </div>
         </div>
@@ -414,12 +589,12 @@ export default function Home() {
             <button className="btn-submit" type="submit" disabled={sent}>
               {sent ? (
                 <>
-                  <CheckCircle2 size={14} style={{ display: 'inline', marginRight: 8, verticalAlign: -2 }} />
+                  <CheckCircle2 size={14} />
                   Sent — thank you
                 </>
               ) : (
                 <>
-                  <Send size={14} style={{ display: 'inline', marginRight: 8, verticalAlign: -2 }} />
+                  <Send size={14} />
                   Send message
                 </>
               )}
@@ -467,13 +642,11 @@ export default function Home() {
         </nav>
       </footer>
 
-      {toast && <div style={{ position: 'fixed', bottom: 20, left: '50%', transform: 'translateX(-50%)', background: 'var(--text)', color: 'var(--bg)', padding: '10px 16px', borderRadius: 999, fontSize: 12, fontWeight: 600, zIndex: 99 }}>{toast}</div>}
-
-      <script
-        dangerouslySetInnerHTML={{
-          __html: `(()=>{const o=new IntersectionObserver(e=>{e.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');o.unobserve(e.target)}})},{threshold:.12});document.querySelectorAll('.reveal').forEach(e=>o.observe(e))})();`,
-        }}
-      />
+      {toast && (
+        <div className="toast" role="status">
+          {toast}
+        </div>
+      )}
     </main>
   );
 }
