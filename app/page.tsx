@@ -451,6 +451,8 @@ export default function Home() {
               <div className="project-media">
                 <ProjectArt p={p} />
                 {p.featured && <span className="featured-badge">★ Featured</span>}
+                {p.video && <span className="video-badge">▶ Demo video</span>}
+                {!p.video && (p.live || p.demo.startsWith('/demos/') || p.demo.includes('vercel.app')) && <span className="video-badge">▶ Live demo</span>}
               </div>
               <div className="project-body">
                 <div className="project-top">
@@ -490,8 +492,12 @@ export default function Home() {
             <button className="modal-close" onClick={() => setSelected(null)} aria-label="Close">
               <X size={16} />
             </button>
-            <div className="modal-media">
-              <ProjectArt p={selected} />
+            <div className={selected.video ? 'modal-media modal-video' : 'modal-media'}>
+              {selected.video ? (
+                <video src={selected.video} poster={selected.image} autoPlay muted loop playsInline controls aria-label={`${selected.title} walkthrough`} />
+              ) : (
+                <ProjectArt p={selected} />
+              )}
               {selected.featured && <span className="modal-badge">Featured — Live SaaS</span>}
             </div>
             <div className="modal-body">

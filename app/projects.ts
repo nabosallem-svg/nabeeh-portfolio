@@ -25,6 +25,8 @@ export type Project = {
   run: string;
   featured: boolean;
   group: ProjectGroup;
+  /** Recorded walkthrough shown at the top of the modal instead of the image. */
+  video?: string;
   /** Extra in-browser demo shown as its own button (e.g. a web build next to an APK). */
   live?: string;
   liveLabel?: string;
@@ -122,6 +124,7 @@ const list: Project[] = [
     tech: ['Spring Boot', 'Java 17', 'H2', 'WhatsApp API'],
     year: '2026',
     image: '/assets/project-clinic.png',
+    video: '/assets/clinic-demo.webm',
     github: 'https://github.com/nabosallem-svg/datagris-clinic',
     demo: '',
     demoLabel: 'Open',
