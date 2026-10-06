@@ -540,7 +540,7 @@ export default function Home() {
                   <a
                     className={selected.featured ? 'btn-primary modal-primary' : selected.live ? 'btn-ghost' : 'btn-primary'}
                     href={selected.demo}
-                    target={selected.demo.startsWith('http') || selected.demo.endsWith('.html') ? '_blank' : undefined}
+                    target={selected.demo.startsWith('http') || selected.demo.startsWith('/demos/') || selected.demo.endsWith('.html') ? '_blank' : undefined}
                     rel="noreferrer"
                     // /* ★ DOWNLOAD ATTRIBUTE — ONLY FOR APK/JAR/ZIP/EXE FILES ★ */
                     download={/\.(apk|jar|zip|exe)$/i.test(selected.demo) ? '' : undefined}

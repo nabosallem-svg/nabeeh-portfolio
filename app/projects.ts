@@ -52,7 +52,7 @@ const list: Project[] = [
     year: '2026',
     image: '/assets/project-reconpilot.png',
     github: 'https://github.com/nabosallem-svg/RedPulse',
-    demo: 'https://redpulse-frontend.vercel.app',
+    demo: '/demos/redpulse/',
     demoLabel: 'Launch RedPulse',
     howTitle: 'How it works',
     how: 'FastAPI runs Subfinder → httpx → Nuclei/Nmap → stores assets & findings in PostgreSQL → Next.js dashboard shows results with real-time status. Auth via Supabase, payments via Stripe.',
