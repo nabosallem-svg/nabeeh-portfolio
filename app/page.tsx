@@ -512,11 +512,18 @@ export default function Home() {
               </div>
               {selected.output && <Terminal text={selected.output} />}
 
+              {selected.live && (
+                <a className="btn-primary live-btn" href={selected.live} target="_blank" rel="noreferrer">
+                  <Play size={14} />
+                  {selected.liveLabel}
+                </a>
+              )}
+
               {/* /* ★ FUNCTIONAL <a> TAGS — EMPTY LINKS ARE HIDDEN ★ */}
               <div className={selected.demo && selected.github ? 'modal-actions' : 'modal-actions single'}>
                 {selected.demo && (
                   <a
-                    className={selected.featured ? 'btn-primary modal-primary' : 'btn-primary'}
+                    className={selected.featured ? 'btn-primary modal-primary' : selected.live ? 'btn-ghost' : 'btn-primary'}
                     href={selected.demo}
                     target={selected.demo.startsWith('http') || selected.demo.endsWith('.html') ? '_blank' : undefined}
                     rel="noreferrer"
@@ -537,7 +544,7 @@ export default function Home() {
                   </a>
                 )}
                 {selected.github && (
-                  <a className={selected.demo ? 'btn-ghost' : 'btn-primary'} href={selected.github} target="_blank" rel="noreferrer">
+                  <a className={selected.demo || selected.live ? 'btn-ghost' : 'btn-primary'} href={selected.github} target="_blank" rel="noreferrer">
                     <Github size={14} />
                     GitHub
                   </a>

@@ -25,6 +25,9 @@ export type Project = {
   run: string;
   featured: boolean;
   group: ProjectGroup;
+  /** Extra in-browser demo shown as its own button (e.g. a web build next to an APK). */
+  live?: string;
+  liveLabel?: string;
   /** Real console output shown in the modal (see outputs.ts). */
   output?: string;
 };
@@ -67,6 +70,8 @@ const list: Project[] = [
     github: 'https://github.com/nabosallem-svg/DataGris-Store',
     demo: '/DataGris-App.apk',
     demoLabel: 'Download APK',
+    live: '/demos/datagris-store/',
+    liveLabel: 'Try web demo',
     howTitle: 'How inventory & sales work',
     how: 'Flutter POS scans barcode → Hive caches locally → Firebase syncs → stock auto-deducts, low-stock alerts trigger, treasury updates and invoices generate. Works offline then syncs.',
     run: '1) Download APK above and install on Android\n2) Or: flutter pub get && flutter run  (Hive local DB + Firebase)',

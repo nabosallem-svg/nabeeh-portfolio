@@ -450,6 +450,8 @@ html.scrolled .topbar{
   margin:12px 0 0;padding:12px 14px;background:#0B0D12;border:1px solid #1D212B;border-radius:10px;
   font:12px var(--font-geist-mono),monospace;color:#D7DBE3;white-space:pre-wrap;word-break:break-word;line-height:1.7;
 }
+.live-btn{width:100%;margin-top:18px;background:var(--accent);border-color:var(--accent);color:#fff}
+.live-btn + .modal-actions{margin-top:10px}
 .modal-actions{margin-top:18px;display:grid;grid-template-columns:1fr 1fr;gap:10px}
 .modal-actions.single{grid-template-columns:1fr}
 .modal-actions:empty{display:none}
