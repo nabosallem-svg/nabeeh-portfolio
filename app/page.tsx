@@ -83,6 +83,48 @@ function onCardLeave(e: React.PointerEvent<HTMLElement>) {
   e.currentTarget.style.setProperty('--ry', '0deg');
 }
 
+// /* ★ TERMINAL — replays a real recorded run line by line ★ */
+function Terminal({ text }: { text: string }) {
+  const lines = text.split('\n');
+  const [n, setN] = useState(1);
+  const [run, setRun] = useState(0);
+  useEffect(() => {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      setN(lines.length);
+      return;
+    }
+    setN(1);
+    const t = setInterval(() => setN((v) => Math.min(v + 1, lines.length)), 70);
+    return () => clearInterval(t);
+  }, [text, run, lines.length]);
+  const bodyRef = useRef<HTMLPreElement>(null);
+  useEffect(() => {
+    bodyRef.current?.scrollTo({ top: bodyRef.current.scrollHeight });
+  }, [n]);
+  return (
+    <div className="term">
+      <div className="term-bar">
+        <i />
+        <i />
+        <i />
+        <span>Output — real run</span>
+        <button type="button" onClick={() => setRun((r) => r + 1)} aria-label="Replay output">
+          ↻ Replay
+        </button>
+      </div>
+      <pre ref={bodyRef}>
+        {lines.slice(0, n).map((l, i) => (
+          <span key={i} className={l.startsWith('$ ') ? 'term-cmd' : undefined}>
+            {l}
+            {'\n'}
+          </span>
+        ))}
+        {n < lines.length && <span className="art-caret" />}
+      </pre>
+    </div>
+  );
+}
+
 // /* ★ PLACEHOLDER ART FOR PROJECTS WITHOUT A SCREENSHOT ★ */
 function ProjectArt({ p }: { p: Project }) {
   if (p.image) return <img src={p.image} alt={p.title} loading="lazy" />;
@@ -468,6 +510,7 @@ export default function Home() {
                 <p>{selected.how}</p>
                 <pre>{selected.run}</pre>
               </div>
+              {selected.output && <Terminal text={selected.output} />}
 
               {/* /* ★ FUNCTIONAL <a> TAGS — EMPTY LINKS ARE HIDDEN ★ */}
               <div className={selected.demo && selected.github ? 'modal-actions' : 'modal-actions single'}>
@@ -475,10 +518,10 @@ export default function Home() {
                   <a
                     className={selected.featured ? 'btn-primary modal-primary' : 'btn-primary'}
                     href={selected.demo}
-                    target={selected.demo.startsWith('http') || selected.demo.startsWith('mailto:') ? '_blank' : undefined}
+                    target={selected.demo.startsWith('http') || selected.demo.endsWith('.html') ? '_blank' : undefined}
                     rel="noreferrer"
-                    // /* ★ DOWNLOAD ATTRIBUTE — ONLY FOR APK/JAR (starts with "/") ★ */
-                    download={selected.demo.startsWith('/') ? '' : undefined}
+                    // /* ★ DOWNLOAD ATTRIBUTE — ONLY FOR APK/JAR/ZIP/EXE FILES ★ */
+                    download={/\.(apk|jar|zip|exe)$/i.test(selected.demo) ? '' : undefined}
                   >
                     {selected.featured ? (
                       <>
@@ -487,7 +530,7 @@ export default function Home() {
                       </>
                     ) : (
                       <>
-                        <ExternalLink size={14} />
+                        {/\.(apk|jar|zip|exe)$/i.test(selected.demo) ? <Download size={14} /> : <ExternalLink size={14} />}
                         {selected.demoLabel}
                       </>
                     )}

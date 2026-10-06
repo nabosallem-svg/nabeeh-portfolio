@@ -5,6 +5,8 @@
 // `group` drives the filter chips above the grid.
 // ==========================================
 
+import { outputs } from './outputs';
+
 export type ProjectGroup = 'security' | 'software' | 'ai' | 'web' | 'depi';
 
 export type Project = {
@@ -23,6 +25,8 @@ export type Project = {
   run: string;
   featured: boolean;
   group: ProjectGroup;
+  /** Real console output shown in the modal (see outputs.ts). */
+  output?: string;
 };
 
 export const groups: { key: 'all' | ProjectGroup; label: string }[] = [
@@ -34,7 +38,7 @@ export const groups: { key: 'all' | ProjectGroup; label: string }[] = [
   { key: 'depi', label: 'DEPI Training' },
 ];
 
-export const projects: Project[] = [
+const list: Project[] = [
   {
     id: '01',
     type: 'SaaS · Security — Featured',
@@ -112,6 +116,7 @@ export const projects: Project[] = [
     desc: 'Arabic patient booking system — service, doctor and slot selection, OTP verification, self-service booking links, reception board and clinic finance.',
     tech: ['Spring Boot', 'Java 17', 'H2', 'WhatsApp API'],
     year: '2026',
+    image: '/assets/project-clinic.png',
     github: 'https://github.com/nabosallem-svg/datagris-clinic',
     demo: '',
     demoLabel: 'Open',
@@ -128,6 +133,7 @@ export const projects: Project[] = [
     desc: 'Arabic-first (RTL) online bodybuilding coaching — animated landing page plus a trainee app and coach panel.',
     tech: ['Next.js', 'TypeScript', 'Tailwind', 'GSAP', 'Supabase'],
     year: '2026',
+    image: '/assets/project-coach.png',
     github: 'https://github.com/nabosallem-svg/coach-junior',
     demo: 'https://coach-junior.vercel.app',
     demoLabel: 'Open Live',
@@ -144,9 +150,10 @@ export const projects: Project[] = [
     desc: 'Arabic (RTL) site for an online Quran academy — trial session booking, level test, audio library, payment and student pages.',
     tech: ['HTML', 'Tailwind CSS', 'RTL'],
     year: '2026',
+    image: '/assets/project-noor.png',
     github: 'https://github.com/nabosallem-svg/noor-quran-site',
-    demo: '',
-    demoLabel: 'Open',
+    demo: '/demos/noor-quran/index.html',
+    demoLabel: 'Open Live',
     howTitle: 'Pages',
     how: 'Home, booking (trial session), level test, audio library & blog, payment and student dashboard — mobile-first, IBM Plex Sans Arabic and Noto Naskh Arabic typography.',
     run: '1) git clone https://github.com/nabosallem-svg/noor-quran-site\n2) python3 -m http.server 8000  →  http://localhost:8000',
@@ -246,11 +253,11 @@ export const projects: Project[] = [
     tech: ['Java', 'OOP', 'Maven'],
     year: '2026',
     github: 'https://github.com/nabosallem-svg/DEPI-Student-Management-GP11',
-    demo: '',
-    demoLabel: 'Open',
+    demo: '/downloads/depi-student-management-gp11.jar',
+    demoLabel: 'Download JAR',
     howTitle: 'Classes',
     how: 'Person (abstract), Student, Instructor, Course, Grade, StudentManagementSystem.',
-    run: 'mvn package',
+    run: '1) Download the JAR above (needs Java 17+)\n2) java -jar depi-student-management-gp11.jar',
     featured: false,
     group: 'depi',
   },
@@ -262,11 +269,11 @@ export const projects: Project[] = [
     tech: ['Java', 'Inheritance', 'Maven'],
     year: '2026',
     github: 'https://github.com/nabosallem-svg/DEPI-ECommerce-Task09A',
-    demo: '',
-    demoLabel: 'Open',
+    demo: '/downloads/depi-ecommerce-task09a.jar',
+    demoLabel: 'Download JAR',
     howTitle: 'Classes',
     how: 'Item (abstract), Clothing, Device, Shirt, Socks, Hat, Printer, Laptop, Projector, Cart.',
-    run: 'mvn package',
+    run: '1) Download the JAR above (needs Java 17+)\n2) java -jar depi-ecommerce-task09a.jar',
     featured: false,
     group: 'depi',
   },
@@ -278,11 +285,11 @@ export const projects: Project[] = [
     tech: ['Java', 'Abstraction', 'Maven'],
     year: '2026',
     github: 'https://github.com/nabosallem-svg/DEPI-University-Task09B',
-    demo: '',
-    demoLabel: 'Open',
+    demo: '/downloads/depi-university-task09b.jar',
+    demoLabel: 'Download JAR',
     howTitle: 'Classes',
     how: 'Abstract Course, TheoryCourse, LabCourse, Student, Department.',
-    run: 'mvn package',
+    run: '1) Download the JAR above (needs Java 17+)\n2) java -jar depi-university-task09b.jar',
     featured: false,
     group: 'depi',
   },
@@ -294,11 +301,11 @@ export const projects: Project[] = [
     tech: ['Java', 'Composition', 'ArrayList'],
     year: '2026',
     github: 'https://github.com/nabosallem-svg/DEPI-Soccer-League-System-Assignment02',
-    demo: '',
-    demoLabel: 'Open',
+    demo: '/downloads/depi-soccer-league-system-assignment02.jar',
+    demoLabel: 'Download JAR',
     howTitle: 'Classes',
     how: 'Player, Team, Goal, Match, Schedule — updateStatistics() for goals and points, getRankedTeams() for the table.',
-    run: 'javac -d out src/main/java/com/soccersystem/*.java\njava -cp out com.soccersystem.Main',
+    run: '1) Download the JAR above (needs Java 17+)\n2) java -jar depi-soccer-league-system-assignment02.jar',
     featured: false,
     group: 'depi',
   },
@@ -310,11 +317,11 @@ export const projects: Project[] = [
     tech: ['Java', 'Composition', 'ArrayList'],
     year: '2026',
     github: 'https://github.com/nabosallem-svg/DEPI-Shopping-System-Assignment03',
-    demo: '',
-    demoLabel: 'Open',
+    demo: '/downloads/depi-shopping-system-assignment03.jar',
+    demoLabel: 'Download JAR',
     howTitle: 'Classes',
     how: 'Item, Cart, Bill, Customer — the bill is created from a cart and calculates the total.',
-    run: 'javac -d out src/main/java/com/shopping/system/*.java\njava -cp out com.shopping.system.Main',
+    run: '1) Download the JAR above (needs Java 17+)\n2) java -jar depi-shopping-system-assignment03.jar',
     featured: false,
     group: 'depi',
   },
@@ -326,12 +333,14 @@ export const projects: Project[] = [
     tech: ['Java', 'Collections'],
     year: '2026',
     github: 'https://github.com/nabosallem-svg/DEPI-Java-Collections-Task08',
-    demo: '',
-    demoLabel: 'Open',
+    demo: '/downloads/depi-java-collections-task08.jar',
+    demoLabel: 'Download JAR',
     howTitle: 'Collections used',
     how: 'Array, 2D Array, List, ArrayList, LinkedList, Set, HashSet, HashMap.',
-    run: 'javac -d out src/main/java/com/collections/Main.java\njava -cp out com.collections.Main',
+    run: '1) Download the JAR above (needs Java 17+)\n2) java -jar depi-java-collections-task08.jar',
     featured: false,
     group: 'depi',
   },
 ];
+
+export const projects: Project[] = list.map((p) => ({ ...p, output: outputs[p.id] }));
