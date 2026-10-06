@@ -175,6 +175,7 @@ const list: Project[] = [
     tech: ['Python', 'CustomTkinter', 'SQLite', 'OpenCV'],
     year: '2025',
     image: '/assets/project-pharmacy.png',
+    video: '/assets/pharmacy-demo.webm',
     github: 'https://github.com/nabosallem-svg/Pharmacy-Management-System',
     demo: '',
     demoLabel: 'Open',
