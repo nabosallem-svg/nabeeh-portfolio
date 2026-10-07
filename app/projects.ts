@@ -202,23 +202,6 @@ const list: Project[] = [
     featured: false,
     group: 'ai',
   },
-  {
-    id: '10',
-    type: 'Computer Vision',
-    title: 'Subsurface Object Detection',
-    desc: 'Detecting underground objects from GPR imagery with a custom vision pipeline.',
-    tech: ['YOLO', 'Python', 'OpenCV', 'GPR'],
-    year: '2025',
-    image: '/assets/project-gpr.png',
-    github: '',
-    demo: '',
-    demoLabel: 'Open',
-    howTitle: 'Pipeline',
-    how: 'GPR image preprocessing → dataset preparation & labeling → YOLO detection with bounding-box overlay.',
-    run: 'Python + OpenCV preprocessing, YOLO training and inference.',
-    featured: false,
-    group: 'ai',
-  },
 ];
 
 export const projects: Project[] = list.map((p) => ({ ...p, output: outputs[p.id] }));
