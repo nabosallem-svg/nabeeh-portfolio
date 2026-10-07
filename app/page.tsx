@@ -19,6 +19,7 @@ import {
   Sun,
 } from 'lucide-react';
 import { groups, projects, type Project, type ProjectGroup } from './projects';
+import { Intro, ParticleField, Cursor, useMotion, Words, Marquee } from './fx';
 const Github = Code2;
 
 // === SKILLS (static) ===
@@ -154,6 +155,7 @@ export default function Home() {
   const [selected, setSelected] = useState<Project | null>(null);
   const [filter, setFilter] = useState<'all' | ProjectGroup>('all');
   const [active, setActive] = useState('home');
+  const [booted, setBooted] = useState(false);
   const bgRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -257,13 +259,18 @@ export default function Home() {
     setForm({ name: '', email: '', message: '' });
   }
 
+  useMotion([filter, booted, selected]);
+
   const shown = projects.filter((p) => filter === 'all' || p.group === filter);
 
   return (
     <main>
       {/* ——— Animated background ——— */}
+      {!booted && <Intro onDone={() => setBooted(true)} />}
+      <Cursor />
       <div className="bg" ref={bgRef} aria-hidden="true">
         <div className="bg-grid" />
+        <ParticleField />
         <div className="bg-orb orb-a" />
         <div className="bg-orb orb-b" />
         <div className="bg-spot" />
@@ -293,7 +300,7 @@ export default function Home() {
       </header>
 
       <section className="hero" id="home">
-        <div className="hero-main">
+        <div className="hero-main" key={booted ? 'on' : 'off'}>
           <p className="hero-label">
             <span className="pulse" />
             Cybersecurity — Red Teaming & Bug Hunting · Available for internships
@@ -362,10 +369,12 @@ export default function Home() {
         </div>
       </section>
 
+      <Marquee items={skills.flatMap((g) => g.items)} />
+
       <section className="section" id="about">
         <div className="section-head reveal">
           <h2>
-            About <span>— core focus</span>
+            <Words text="About" /> <span><Words text="— core focus" base={0.12} /></span>
           </h2>
           <p>
             <strong>Cybersecurity (Red Teaming & Bug Hunting)</strong> is my core — break to learn, then build to defend. AI is my supporting stack.
@@ -416,7 +425,7 @@ export default function Home() {
       <section className="section" id="projects">
         <div className="section-head reveal">
           <h2>
-            Selected <span>work — {projects.length} projects</span>
+            <Words text="Selected" /> <span><Words text={`work — ${projects.length} projects`} base={0.12} /></span>
           </h2>
           <p>Click any card to open its modal — backdrop or Esc closes it.</p>
           <div className="line" />
@@ -531,7 +540,7 @@ export default function Home() {
                   <a
                     className={selected.featured ? 'btn-primary modal-primary' : selected.live ? 'btn-ghost' : 'btn-primary'}
                     href={selected.demo}
-                    target={selected.demo.startsWith('http') || selected.demo.endsWith('.html') ? '_blank' : undefined}
+                    target={selected.demo.startsWith('http') || selected.demo.startsWith('/demos/') || selected.demo.endsWith('.html') ? '_blank' : undefined}
                     rel="noreferrer"
                     // /* ★ DOWNLOAD ATTRIBUTE — ONLY FOR APK/JAR/ZIP/EXE FILES ★ */
                     download={/\.(apk|jar|zip|exe)$/i.test(selected.demo) ? '' : undefined}
@@ -565,7 +574,7 @@ export default function Home() {
       <section className="section" id="contact">
         <div className="section-head reveal">
           <h2>
-            Contact <span>— simple</span>
+            <Words text="Contact" /> <span><Words text="— simple" base={0.12} /></span>
           </h2>
           <p>One form, no noise. I reply within 24 hours.</p>
           <div className="line" />
