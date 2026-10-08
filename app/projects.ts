@@ -87,6 +87,7 @@ const list: Project[] = [
     tech: ['Java 17', 'Maven', 'OOP'],
     year: '2025',
     image: '/assets/project-velox.png',
+    video: '/assets/velox-demo.webm',
     github: 'https://github.com/nabosallem-svg/VELOX',
     demo: '/Velox.jar',
     demoLabel: 'Download JAR',
