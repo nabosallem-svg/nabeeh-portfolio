@@ -16,7 +16,8 @@ const BOOT = [
 
 export function Intro({ onDone }: { onDone: () => void }) {
   const [lines, setLines] = useState(0);
-  const [pct, setPct] = useState(0);
+  const barRef = useRef<HTMLElement>(null);
+  const pctRef = useRef<HTMLDivElement>(null);
   const [leaving, setLeaving] = useState(false);
   const doneRef = useRef(false);
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -40,7 +41,10 @@ export function Intro({ onDone }: { onDone: () => void }) {
     let raf = 0;
     const tick = (now: number) => {
       const k = Math.min(1, (now - t0) / DURATION);
-      setPct(Math.round((1 - Math.pow(1 - k, 2)) * 100));
+      // bar and percentage are written directly; React only re-renders when a log line appears
+      const pct = Math.round((1 - Math.pow(1 - k, 2)) * 100);
+      if (barRef.current) barRef.current.style.transform = `scaleX(${pct / 100})`;
+      if (pctRef.current) pctRef.current.textContent = `${String(pct).padStart(3, '0')}%`;
       setLines(Math.min(BOOT.length, Math.floor(k * (BOOT.length + 0.6))));
       if (k < 1) raf = requestAnimationFrame(tick);
       else setTimeout(finish, 350);
@@ -103,9 +107,11 @@ export function Intro({ onDone }: { onDone: () => void }) {
           <span className="intro-caret" />
         </pre>
         <div className="intro-bar">
-          <i style={{ transform: `scaleX(${pct / 100})` }} />
+          <i ref={barRef} style={{ transform: 'scaleX(0)' }} />
         </div>
-        <div className="intro-pct">{String(pct).padStart(3, '0')}%</div>
+        <div className="intro-pct" ref={pctRef}>
+          000%
+        </div>
       </div>
       <button
         type="button"
@@ -149,8 +155,13 @@ export function ParticleField() {
       mouse.y = e.clientY;
     };
     let raf = 0;
+    const readAccent = () => getComputedStyle(document.documentElement).getPropertyValue('--accent').trim() || '#FF3B5C';
+    let accent = readAccent();
+    const themeObs = new MutationObserver(() => {
+      accent = readAccent();
+    });
+    themeObs.observe(document.documentElement, { attributes: true, attributeFilter: ['class', 'data-theme', 'style'] });
     const draw = () => {
-      const accent = getComputedStyle(document.documentElement).getPropertyValue('--accent').trim() || '#FF3B5C';
       ctx.clearRect(0, 0, w, h);
       for (const p of pts) {
         p.x += p.vx;
@@ -203,6 +214,7 @@ export function ParticleField() {
     window.addEventListener('pointermove', onMove, { passive: true });
     return () => {
       cancelAnimationFrame(raf);
+      themeObs.disconnect();
       window.removeEventListener('resize', resize);
       window.removeEventListener('pointermove', onMove);
     };
@@ -227,6 +239,7 @@ export function Cursor() {
       y = e.clientY;
       const t = e.target as Element | null;
       ring.current?.classList.toggle('hover', !!t?.closest('a,button,[role="button"],input,textarea,.project'));
+      if (!raf) raf = requestAnimationFrame(loop);
     };
     const onDown = () => ring.current?.classList.add('down');
     const onUp = () => ring.current?.classList.remove('down');
@@ -235,7 +248,8 @@ export function Cursor() {
       ry += (y - ry) * 0.18;
       if (dot.current) dot.current.style.transform = `translate(${x}px,${y}px)`;
       if (ring.current) ring.current.style.transform = `translate(${rx}px,${ry}px)`;
-      raf = requestAnimationFrame(loop);
+      // stop once the ring has caught up; the next pointer move restarts it
+      raf = Math.abs(x - rx) + Math.abs(y - ry) > 0.2 ? requestAnimationFrame(loop) : 0;
     };
     raf = requestAnimationFrame(loop);
     window.addEventListener('pointermove', onMove, { passive: true });
@@ -279,12 +293,22 @@ export function useMotion(deps: unknown[] = []) {
         el.removeEventListener('pointerleave', leave);
       };
     });
-    const root = document.documentElement;
-    const onScroll = () => root.style.setProperty('--sy', String(window.scrollY));
+    // parallax: set --sy only on the layers that use it, once per frame
+    const layers = Array.from(document.querySelectorAll<HTMLElement>('.radar,.orb-a,.orb-b'));
+    let raf = 0;
+    const onScroll = () => {
+      if (raf) return;
+      raf = requestAnimationFrame(() => {
+        raf = 0;
+        const sy = String(window.scrollY);
+        for (const el of layers) el.style.setProperty('--sy', sy);
+      });
+    };
     onScroll();
     window.addEventListener('scroll', onScroll, { passive: true });
     return () => {
       handlers.forEach((off) => off());
+      cancelAnimationFrame(raf);
       window.removeEventListener('scroll', onScroll);
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
