@@ -158,6 +158,20 @@ export default function Home() {
   const [booted, setBooted] = useState(false);
   const bgRef = useRef<HTMLDivElement>(null);
 
+  // /* ★ ALWAYS OPEN AT THE TOP — ignore a restored scroll position or a #section left in the URL ★ */
+  useEffect(() => {
+    if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+    if (location.hash) history.replaceState(null, '', location.pathname + location.search);
+    const root = document.documentElement;
+    root.style.scrollBehavior = 'auto';
+    window.scrollTo(0, 0);
+    const raf = requestAnimationFrame(() => {
+      window.scrollTo(0, 0);
+      root.style.scrollBehavior = '';
+    });
+    return () => cancelAnimationFrame(raf);
+  }, []);
+
   useEffect(() => {
     const saved = localStorage.getItem('theme') as 'light' | 'dark' | null;
     const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
