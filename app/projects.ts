@@ -141,7 +141,7 @@ const list: Project[] = [
     desc: 'Arabic-first (RTL) online bodybuilding coaching — animated landing page plus a trainee app and coach panel.',
     tech: ['Next.js', 'TypeScript', 'Tailwind', 'GSAP', 'Supabase'],
     year: '2026',
-    image: '/assets/project-coach.png',
+    image: '/assets/project-coach.jpg',
     video: '/assets/coach-demo.webm',
     github: 'https://github.com/nabosallem-svg/coach-junior',
     demo: 'https://nabosallem-svg.github.io/coach-junior/',

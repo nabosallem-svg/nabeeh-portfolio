@@ -179,19 +179,41 @@ export default function Home() {
   // /* ★ SCROLL PROGRESS + BACKGROUND GLOW FOLLOWS CURSOR ★ */
   useEffect(() => {
     const root = document.documentElement;
+    const bar = document.querySelector<HTMLElement>('.progress');
+    // one update per frame, written to the elements that use it (not :root)
+    let scrollRaf = 0;
+    let scrolled = false;
     const onScroll = () => {
-      const max = root.scrollHeight - root.clientHeight;
-      root.style.setProperty('--progress', String(max > 0 ? root.scrollTop / max : 0));
-      root.classList.toggle('scrolled', root.scrollTop > 8);
+      if (scrollRaf) return;
+      scrollRaf = requestAnimationFrame(() => {
+        scrollRaf = 0;
+        const max = root.scrollHeight - root.clientHeight;
+        bar?.style.setProperty('--progress', String(max > 0 ? root.scrollTop / max : 0));
+        if (scrolled !== root.scrollTop > 8) {
+          scrolled = !scrolled;
+          root.classList.toggle('scrolled', scrolled);
+        }
+      });
     };
+    let mx = 0;
+    let my = 0;
+    let moveRaf = 0;
     const onMove = (e: PointerEvent) => {
-      bgRef.current?.style.setProperty('--mx', `${e.clientX}px`);
-      bgRef.current?.style.setProperty('--my', `${e.clientY}px`);
+      mx = e.clientX;
+      my = e.clientY;
+      if (moveRaf) return;
+      moveRaf = requestAnimationFrame(() => {
+        moveRaf = 0;
+        bgRef.current?.style.setProperty('--mx', `${mx}px`);
+        bgRef.current?.style.setProperty('--my', `${my}px`);
+      });
     };
     onScroll();
     window.addEventListener('scroll', onScroll, { passive: true });
     window.addEventListener('pointermove', onMove, { passive: true });
     return () => {
+      cancelAnimationFrame(scrollRaf);
+      cancelAnimationFrame(moveRaf);
       window.removeEventListener('scroll', onScroll);
       window.removeEventListener('pointermove', onMove);
     };

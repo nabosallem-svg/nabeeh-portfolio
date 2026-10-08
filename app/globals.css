@@ -67,7 +67,7 @@ strong{color:var(--text)}
 @keyframes lineGrow{from{transform:scaleX(0)}to{transform:scaleX(1)}}
 @keyframes drift1{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(8vw,6vh) scale(1.15)}}
 @keyframes drift2{0%,100%{transform:translate(0,0) scale(1.1)}50%{transform:translate(-6vw,-8vh) scale(.95)}}
-@keyframes gridPan{to{background-position:56px 56px}}
+@keyframes gridPan{to{transform:translate(56px,56px)}}
 @keyframes pulse{0%{box-shadow:0 0 0 0 var(--glow)}70%{box-shadow:0 0 0 9px transparent}100%{box-shadow:0 0 0 0 transparent}}
 @keyframes blink{50%{opacity:0}}
 @keyframes spin{to{transform:rotate(360deg)}}
@@ -81,20 +81,24 @@ strong{color:var(--text)}
 /* ——— Animated background ——— */
 .bg{position:fixed;inset:0;z-index:-1;pointer-events:none;overflow:hidden;--mx:50vw;--my:30vh}
 .bg-grid{
-  position:absolute;inset:-56px;
-  background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);
-  background-size:56px 56px;
+  position:absolute;inset:0;overflow:hidden;
   mask-image:radial-gradient(ellipse 80% 60% at 50% 0%,#000 30%,transparent 75%);
   -webkit-mask-image:radial-gradient(ellipse 80% 60% at 50% 0%,#000 30%,transparent 75%);
-  animation:gridPan 18s linear infinite;
+}
+.bg-grid::before{
+  content:'';position:absolute;inset:-56px;
+  background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);
+  background-size:56px 56px;
+  animation:gridPan 18s linear infinite;will-change:transform;
 }
 .bg-orb{position:absolute;border-radius:50%;filter:blur(90px);opacity:.55}
 .orb-a{width:42vw;height:42vw;left:-10vw;top:-14vw;background:radial-gradient(circle,var(--glow),transparent 65%);animation:drift1 22s ease-in-out infinite}
 .orb-b{width:36vw;height:36vw;right:-12vw;top:30vh;background:radial-gradient(circle,rgba(249,115,22,.14),transparent 65%);animation:drift2 26s ease-in-out infinite}
 .bg-spot{
-  position:absolute;inset:0;
-  background:radial-gradient(520px circle at var(--mx) var(--my),var(--accent-soft),transparent 60%);
-  transition:background .15s linear;
+  position:absolute;left:-520px;top:-520px;width:1040px;height:1040px;
+  background:radial-gradient(520px circle at center,var(--accent-soft),transparent 60%);
+  transform:translate(var(--mx),var(--my));
+  transition:transform .15s linear;will-change:transform;
 }
 .progress{
   position:fixed;top:0;left:0;right:0;height:2px;z-index:60;transform-origin:left;
